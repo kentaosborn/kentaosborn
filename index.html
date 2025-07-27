@@ -9,6 +9,11 @@
             font-family: sans-serif; /* Default sans-serif font */
             color: black; /* Black text */
             margin: 20px; /* A small margin for readability */
+            background-color: white; /* Initial background color */
+            transition: background-color 1s ease-in-out; /* Smooth transition for background color */
+        }
+        body.fade-in {
+            background-color: #ffe8bf; /* Target background color updated */
         }
         h1 {
             color: black; /* Black heading */
@@ -82,10 +87,12 @@
         document.addEventListener('DOMContentLoaded', () => {
             const headerElement = document.getElementById('animated-header');
             const listItems = document.querySelectorAll('#animated-list li');
+            const bodyElement = document.body;
             let totalDelay = 0; // Cumulative delay for each element
             const lineDelay = 200; // Delay before starting the next element's animation (in milliseconds)
             const charactersPerSecond = 40; // Adjust this value to control typing speed (higher = faster)
             const pauseAfterDesignedForYou = 750; // Additional pause in milliseconds (0.75 seconds - half of 1500)
+            let designedForYouFinished = false;
 
             // Function to animate a single element
             function animateElement(element, isHeader = false) {
@@ -102,7 +109,7 @@
                 element.style.setProperty('--animation-duration', `${animationDuration}s`);
 
                 element.classList.add('animated-element'); // Apply initial hidden state
-                
+
                 setTimeout(() => {
                     element.classList.add('typing-active'); // Start typing animation
 
@@ -111,6 +118,13 @@
                             element.classList.remove('typing-active');
                             element.classList.add('typing-done');
                             element.removeEventListener('animationend', handler);
+
+                            if (element.textContent.includes('2025: Designed for You')) {
+                                designedForYouFinished = true;
+                                setTimeout(() => {
+                                    bodyElement.classList.add('fade-in');
+                                }, 500); // Small delay before starting the fade
+                            }
                         }
                     });
                 }, totalDelay);
