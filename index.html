@@ -10,15 +10,15 @@
             color: black; /* Black text */
             margin: 20px; /* A small margin for readability */
             background-color: white; /* Initial background color */
-            transition: background-color 1s ease-in-out; /* Smooth transition for initial background color */
+            transition: background-color 3s ease-in-out; /* Smooth transition for initial background color - Increased to 3s */
         }
         body.fade-in {
-            background-color: #ffe8bf; /* Target background color updated */
+            background-color: #e9f1fd; /* Target background color updated */
         }
         /* New animation for continuous fading */
         body.loop-fade {
             /* We'll manage the start state of the animation through JS */
-            animation: backgroundLoop 8s ease-in-out infinite; /* Removed 'alternate' as the keyframes handle the back and forth */
+            animation: backgroundLoop 16s ease-in-out infinite; /* Increased to 16s for a longer loop */
         }
 
         h1 {
@@ -56,9 +56,9 @@
         }
         /* Keyframes for continuous background loop */
         @keyframes backgroundLoop {
-            0% { background-color: #ffe8bf; } /* Start from the faded-in color */
+            0% { background-color: #e9f1fd; } /* Start from the faded-in color */
             50% { background-color: white; }
-            100% { background-color: #ffe8bf; } /* Go back to the faded-in color */
+            100% { background-color: #e9f1fd; } /* Go back to the faded-in color */
         }
 
         a {
@@ -139,7 +139,7 @@
                                         if (e.propertyName === 'background-color') {
                                             bodyElement.classList.remove('fade-in'); // Remove the initial fade-in class
                                             // Directly set the background-color to the target before applying the loop
-                                            bodyElement.style.backgroundColor = '#ffe8bf';
+                                            bodyElement.style.backgroundColor = '#e9f1fd';
                                             bodyElement.classList.add('loop-fade'); // Start the continuous loop
                                             bodyElement.removeEventListener('transitionend', transitionHandler);
                                         }
