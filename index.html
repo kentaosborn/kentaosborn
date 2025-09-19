@@ -1,175 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kenta Osborn</title>
-    <style>
-        body {
-            font-family: sans-serif; /* Default sans-serif font */
-            color: black; /* Black text */
-            margin: 20px; /* A small margin for readability */
-            background-color: white; /* Initial background color */
-            transition: background-color 3s ease-in-out; /* Smooth transition for initial background color - Increased to 3s */
-        }
-        body.fade-in {
-            background-color: #e9f1fd; /* Target background color updated */
-        }
-        /* New animation for continuous fading */
-        body.loop-fade {
-            /* We'll manage the start state of the animation through JS */
-            animation: backgroundLoop 16s ease-in-out infinite; /* Increased to 16s for a longer loop */
-        }
-
-        h1 {
-            color: black; /* Black heading */
-            margin-bottom: 20px;
-        }
-        /* Common styles for animated elements */
-        .animated-element {
-            white-space: nowrap; /* Prevent text from wrapping during animation */
-            overflow: hidden; /* Hide overflowing text */
-            width: 0; /* Start with zero width to hide text */
-        }
-        .animated-element.typing-active {
-            /* --animation-duration and --characters are set by JavaScript */
-            animation: typing var(--animation-duration) steps(var(--characters), end) forwards;
-        }
-        .animated-element.typing-done {
-            white-space: normal; /* Allow text to wrap normally after typing */
-            overflow: visible; /* Make overflow visible after typing */
-            width: auto; /* Ensure full width after animation */
-        }
-
-        ul {
-            list-style: none; /* Remove default bullet points */
-            padding: 0;
-            margin: 0;
-        }
-        li {
-            margin-bottom: 5px; /* Small margin between list items */
-        }
-        /* Keyframes for typing animation */
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
-        }
-        /* Keyframes for continuous background loop */
-        @keyframes backgroundLoop {
-            0% { background-color: #e9f1fd; } /* Start from the faded-in color */
-            50% { background-color: white; }
-            100% { background-color: #e9f1fd; } /* Go back to the faded-in color */
-        }
-
-        a {
-            color: #0000EE; /* Default link color (blue) */
-            text-decoration: underline; /* Underline links */
-        }
-        a:visited {
-            color: #551A8B; /* Default visited link color (purple) */
-        }
-        a:hover {
-            color: #EE0000; /* Red on hover */
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Madani's Portfolio</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=azeret-mono@400,500,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body>
+<body> 
+  <main class="fade-in">
+    <section class="intro">
+      <div class="intro-text">
+        <h1 style="font-size: 300%">Madani</h1>
+        <p style="font-size: 110%; margin-bottom: 2.1em;">
+          <span class="no-underline">&gt;</span>
+          <a href="portfolio.html" class="portfolio-link">Portfolio</a>
+        </p>
 
-    <h1 id="animated-header">KENTA OSBORN</h1>
-    <ul id="animated-list">
-        <li>2023: Designed flyers for <a href="https://www.instagram.com/p/CxgKMChuxvW/" target="_blank">the most popular underground show in Chicago</a></li>
-        <li>2023: Made a cover for <a href="https://www.instagram.com/thirteendegrees/" target="_blank">Thirteendegrees</a></li>
-        <li>2024: Designed merch for <a href="https://www.instagram.com/homixide55555/" target="_blank">Homixide Gang</a></li>
-        <li>2024: Hosted a pop-up shop at <a href="https://www.instagram.com/p/C4IdDF-LRsL/?img_index=1" target="_blank">Today Clothing</a></li>
-        <li>2025: Co-founded <a href="https://www.instagram.com/keep_magazine/" target="_blank">Keep Magazine</a></li>
-        <li>2025: Created dozens of promotional flyers for <a href="https://www.instagram.com/redeye.bos/" target="_blank">Redeye</a></li>
-        <li>2025: Worked on projects with <a href="https://www.instagram.com/ground_______control/" target="_blank">Ground Control</a></li>
-        <li>2025: Designed a flyer for <a href="https://www.instagram.com/lazerdim700/" target="_blank">LAZERDIM700’s official ROBLOX concert</a></li>
-        <li>2025: Earned an Associate’s Degree in Fine Arts from Washtenaw Community College</li>
-        <li>2025: Designed for <a href="https://www.instagram.com/snowstrippers/" target="_blank">Snow Strippers</a> and <a href="https://www.instagram.com/surfgang1/" target="_blank">Surf Gang</a></li>
-        <li>2025: Designed for You</li>
+        <p class="subtitle grey-text">
+          Studying Graphic Design BA (Hons)<br>
+          Co-Founder of <a class="grey-text" href="https://keepmagazine.online/">Keep Magazine</a><br><br>
+          Experience in... <br>
+          Graphic Design,<br>
+          Content Design,<br>
+          Editorial Design,<br>
+          Creative Code.
+        </p>
         <br>
-        <li>Contact me now</li>
-        <br>
-        <li>+1 7348469769</li>
-        <li><a href="https://www.instagram.com/kentaosborn/" target="_blank">Instagram</a></li>
-    </ul>
+        <p class="grey-text">
+          <span class="no-underline">&gt;</span>
+          <a href="mailto:abdelrahmanpersonal@gmail.com">Email</a><br>
+          <span class="no-underline">&gt;</span>
+          <a href="https://www.instagram.com/madanivision/" target="_blank">Instagram</a><br>
+          <span class="no-underline">&gt;</span>
+          <a href="https://madanicode.github.io/MadaniJournal/" target="_blank">Blog</a>
+        </p>
+      </div>
+      <div class="contact-image-group">
+        <p class="grey-text phone-number">
+          <a href="tel:+447951033153">+44 7951 033153</a>
+        </p>
+        <div class="intro-image-container">
+          <img src="MadaniProfilePicture.png" alt="Madani Profile Picture" />
+        </div>
+      </div>
+    </section>
+  </main>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const headerElement = document.getElementById('animated-header');
-            const listItems = document.querySelectorAll('#animated-list li');
-            const bodyElement = document.body;
-            let totalDelay = 0; // Cumulative delay for each element
-            const lineDelay = 200; // Delay before starting the next element's animation (in milliseconds)
-            const charactersPerSecond = 40; // Adjust this value to control typing speed (higher = faster)
-            const pauseAfterDesignedForYou = 750; // Additional pause in milliseconds (0.75 seconds - half of 1500)
-
-            // Function to animate a single element
-            function animateElement(element, isHeader = false) {
-                // For <br> tags, we don't animate them, but they still contribute to the delay
-                if (element.tagName === 'BR') {
-                    totalDelay += lineDelay; // Just add the standard line delay for a break
-                    return;
-                }
-
-                const textContentLength = element.textContent.length;
-                const animationDuration = textContentLength / charactersPerSecond; // Duration in seconds
-
-                element.style.setProperty('--characters', textContentLength);
-                element.style.setProperty('--animation-duration', `${animationDuration}s`);
-
-                element.classList.add('animated-element'); // Apply initial hidden state
-
-                setTimeout(() => {
-                    element.classList.add('typing-active'); // Start typing animation
-
-                    element.addEventListener('animationend', function handler(event) {
-                        if (event.animationName === 'typing') {
-                            element.classList.remove('typing-active');
-                            element.classList.add('typing-done');
-                            element.removeEventListener('animationend', handler);
-
-                            if (element.textContent.includes('2025: Designed for You')) {
-                                // After "Designed for You" animation finishes and the initial fade-in starts
-                                setTimeout(() => {
-                                    bodyElement.classList.add('fade-in'); // Start initial fade-in
-                                    // Once the initial fade-in transition is complete, apply the loop animation
-                                    bodyElement.addEventListener('transitionend', function transitionHandler(e) {
-                                        if (e.propertyName === 'background-color') {
-                                            bodyElement.classList.remove('fade-in'); // Remove the initial fade-in class
-                                            // Directly set the background-color to the target before applying the loop
-                                            bodyElement.style.backgroundColor = '#e9f1fd';
-                                            bodyElement.classList.add('loop-fade'); // Start the continuous loop
-                                            bodyElement.removeEventListener('transitionend', transitionHandler);
-                                        }
-                                    });
-                                }, 500); // Small delay before starting the initial fade
-                            }
-                        }
-                    });
-                }, totalDelay);
-
-                // Update totalDelay for the next element
-                totalDelay += (animationDuration * 1000) + lineDelay;
-
-                // Add extra pause after "2025: Designed for You"
-                if (element.textContent.includes('2025: Designed for You')) {
-                    totalDelay += pauseAfterDesignedForYou;
-                }
-            }
-
-            // Animate the header first
-            animateElement(headerElement, true);
-
-            // Animate each list item sequentially, including <br> tags for delay calculation
-            const allAnimatedElements = Array.from(document.getElementById('animated-list').children);
-
-            allAnimatedElements.forEach((element) => {
-                animateElement(element);
-            });
-        });
-    </script>
-
+  <script src="script.js"></script>
 </body>
 </html>

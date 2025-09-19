@@ -1,0 +1,541 @@
+/* === BASE STYLES === */
+body {
+  font-family: 'Azeret Mono', monospace;
+  color: #000;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.gradient-background-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #ffffff 15%, #e0dcdc 70%, #a7a7a7 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+}
+
+body.homepage-locked {
+  overflow-y: hidden;
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-in forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+a {
+  color: #000;
+  text-decoration: underline;
+}
+
+a:hover {
+  opacity: 0.7;
+}
+
+h1 {
+  font-weight: 450;
+  margin-bottom: 0.3em;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+h2, h3{
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+h4, h5, h6 {
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+p {
+  font-size: 90%;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.grey-text {
+  color: #666666;
+}
+
+.no-underline {
+  text-decoration: none !important;
+}
+
+img {
+  border-radius: 10px;
+  max-width: 100%;
+  height: auto;
+}
+
+/* === LAYOUT === */
+header {
+  padding: 1.2rem;
+}
+
+main {
+  padding: 2rem 2rem 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* === HOMEPAGE (index.html) specific === */
+.intro {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.contact-image-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+    flex-shrink: 0;
+}
+
+.phone-number {
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 0;
+    width: 100%;
+}
+
+.intro-image-container {
+    width: 55%;
+    max-width: 250px;
+    border: none;
+    background-color: transparent;
+}
+
+.intro-image-container img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+@media (min-width: 768px) {
+    .intro {
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .contact-image-group {
+        position: static;
+        margin-top: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        flex-shrink: 0;
+    }
+
+    .phone-number {
+        text-align: left;
+        margin-bottom: 5px;
+        margin-top: 0;
+        width: auto;
+    }
+
+    .intro-image-container {
+        flex-shrink: 0;
+        border: none;
+        background-color: transparent;
+        overflow: hidden;
+        margin-top: 0;
+    }
+
+    .intro-image-container img {
+        width: 140px;
+        height: auto;
+        object-fit: contain;
+    }
+}
+
+
+/* === PORTFOLIO GRID (portfolio.html) === */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .portfolio-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .portfolio-item:hover {
+      opacity: 0.8;
+  }
+}
+
+.portfolio-item {
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.portfolio-item a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.portfolio-item h2 {
+    font-size: 1.5em;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 450;
+}
+
+.portfolio-item .tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.portfolio-item .tag {
+    background-color: #e0e0e0;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 0.85em;
+    color: #333;
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+.portfolio-item .project-thumbnail {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 100%;
+    height: 0;
+}
+
+.portfolio-item .project-thumbnail img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* === BACK BUTTON === */
+.back-button {
+  display: inline-block;
+  margin-bottom: 1rem;
+  font-size: 1.1em;
+  text-decoration: none;
+  color: #666666;
+  font-weight: 500;
+}
+
+.back-button:hover {
+  text-decoration: underline;
+}
+
+/* === Portfolio Page Heading === */
+main h1:first-of-type {
+  font-size: 2.5em;
+  margin-bottom: 40px;
+}
+
+
+/* === PROJECT DETAIL PAGE (project-X.html) === */
+.project-detail {
+  max-width: 900px;
+  margin-left: 0;
+  margin-right: auto;
+  padding-bottom: 2rem;
+}
+
+.project-detail h1 {
+  font-size: 2.5em;
+  margin-bottom: 0.5em;
+}
+
+.project-detail .tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.project-detail .tag {
+    background-color: #e0e0e0;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.85em;
+    color: #333;
+    text-transform: capitalize;
+}
+
+.project-detail .main-image {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: contain;
+  margin: 1.5rem 0;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.project-detail .gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .project-detail .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+  }
+}
+
+.project-detail .gallery .gallery-item {
+    overflow: hidden;
+    background-color: transparent;
+}
+
+.project-detail .gallery img,
+.project-detail .gallery video,
+.gallery-item img,
+.gallery-item video {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  display: block;
+  overflow: hidden;
+  background-color: #f0f0f0;
+}
+
+
+/* === LIGHTBOX === */
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox .lightbox-media-wrapper {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+}
+
+.lightbox img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 0;
+}
+
+/* === NEW: In-page project detil window (modal) === */
+.project-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  overflow: auto;
+}
+
+.project-modal.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background-color: transparent;
+  width: 90%;
+  max-width: 1200px;
+  padding: 2rem;
+  position: relative;
+  margin: auto;
+  min-height: 0;
+  box-sizing: border-box;
+}
+
+.modal-inner {
+    max-height: 90vh;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 15px 4rem 15px;
+}
+
+.swipable-gallery-container {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  flex-grow: 1;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+
+.swipable-gallery-container::-webkit-scrollbar {
+  height: 12px;
+  background-color: transparent;
+}
+
+.swipable-gallery-container::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+  border: 3px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+}
+
+.swipable-gallery-container::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2.5rem;
+  font-weight: 300;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: #fff;
+  z-index: 1001;
+}
+
+.project-header {
+  padding-bottom: 2rem;
+}
+
+.gallery-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.swipable-gallery {
+  display: flex;
+  gap: 20px;
+  padding: 10px 0;
+}
+
+.gallery-item {
+  flex-shrink: 0;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+}
+
+.gallery-item img,
+.gallery-item video {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.project-modal h1,
+.project-modal p,
+.project-modal a {
+    color: #fff;
+}
+.project-modal .grey-text {
+    color: #ccc;
+}
+
+.project-modal a:hover {
+    opacity: 0.7;
+}
+
+/* === UPDATED: Mobile-Specific Gallery Styles === */
+@media (max-width: 767px) {
+    .modal-content {
+        width: 100%;
+        padding: 1rem;
+        box-sizing: border-box;
+    }
+
+    .modal-inner {
+        padding: 0;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+    
+    .swipable-gallery {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .gallery-item {
+        width: 90%;
+        margin: 0 auto;
+        height: auto;
+        min-height: 1px;
+    }
+
+    .project-detail p {
+      max-width: 90%;
+      margin: 0 auto;
+    }
+}

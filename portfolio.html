@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio</title>
+  <link rel="icon" href="MadaniVisionIcon.png" type="image/png">
+  <link href="https://api.fontshare.com/v2/css?f[]=azeret-mono@400,500,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="gradient-background-wrapper">
+    <main class="fade-in">
+      <a href="index.html" class="back-button no-underline">&larr; Back</a>
+      <h1 style="font-size: 300%; margin-bottom: 40px;">Portfolio</h1>
+      <section class="portfolio-grid" id="portfolio-grid">
+        </section>
+    </main>
+
+    <div class="project-modal" id="project-modal">
+        <div class="modal-content">
+            <button class="modal-close-button no-underline" id="modal-close">&times;</button>
+            <div class="modal-inner">
+                <div class="project-header">
+                    <h1 id="modal-title"></h1>
+                    <p class="grey-text" id="modal-description"></p>
+                    <p id="modal-external-link" class="download-link-container"></p>
+                </div>
+                
+                <div class="gallery-wrapper">
+                    <div class="swipable-gallery-container">
+                        <div class="swipable-gallery" id="swipable-gallery">
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <script>
+    const projects = [
+        {
+            "id": "keep-magazine",
+            "title": "Keep Magazine",
+            "tags": ["Creative Direction", "UI/UX", "Branding", "Editorial"],
+            "description": "Keep Magazine is a <i>digital first</i>, bi-weekly publication at the junction of creatives. Each interview comes with an experience that is co-created and deeply personalised. We aim to create a level of connection and collaboration no other magazine has matched. We have interviewed the likes of <b>Dan Alves</b> and <b>Alex Clayton</b>.",
+            "mainImage": "KeepMagazineGif.gif",
+            "galleryImages": [
+                { "src": "KeepMagazineImage.png" },
+                { "src": "KeepMagazineImage2.png" },
+                { "src": "KeepMagazineImage3.png" },
+            ],
+            "externalLink": "https://keepmagazine.online/",
+            "externalLinkHtml": `<span class="no-underline">See more at </span><a href="https://keepmagazine.online/">keepmagazine.online</a>`
+        },
+        {
+            "id": "sui-generis",
+            "title": "Sui Generis",
+            "tags": ["Print", "Writing", "Type Design"],
+            "description": "A <b>self-published zine</b> that flips inside out into a poster. A reminder to place ourselves in our work and <em>embrace our individuality</em>.<br> <br>Distributed locally. ",
+            "mainImage": "SuiGenerisGif.gif",
+            "galleryImages": [
+                { "src": "SuiGenerisImage.png" },
+                { "src": "SuiGenerisGif.gif" },
+                { "src": "SuiGenerisImage2.png" },
+                { "src": "SuiGenerisImage3.png" },
+            ],
+            "externalLink": "SuiGenerisPDF.pdf",
+            "externalLinkHtml": `<a href="SuiGenerisPDF.pdf" target="_blank"><span class="no-underline">Download the </span>PDF</a>`
+        },
+        {
+            "id": "editorials",
+            "title": "Editorials",
+            "tags": ["Writing", "Publishing", "Layout Design"],
+            "description": "A collection of editorials I've <b>designed and contributed to</b>, from a variety of publications.",
+            "mainImage": "editorialsgif.gif",
+            "galleryImages": [
+                { "src": "editorial1.png" },
+                { "src": "editorial2.png" },
+                { "src": "editorial3.png" },
+                { "src": "editorial4.png" },
+                { "src": "editorial5.png" },
+                { "src": "editorial6.png" },
+                { "src": "editorial8.png" },
+                { "src": "editorial10.png" }
+            ],
+        },
+        {
+            "id": "content-design",
+            "title": "Content Design",
+            "tags": ["UX", "Journalism", "Strategy"],
+            "description": "Telling stories through <em>meaningful design</em> and presenting ideas in a way that resonates with an audience.<br> <br>These projects showcase engaging content that is both <b>visually appealing</b> and <b>informative</b>.",
+            "mainImage": "contentdesigngif.gif",
+            "galleryImages": [
+                { "src": "ContentDesign4.mp4" },
+                { "src": "ContentDesign3.mp4" },
+                { "src": "ContentDesign1.mp4" },
+                { "src": "ContentDesign5.mp4" },
+                { "src": "ContentDesign2.mp4" },
+            ],
+            "externalLink": "https://www.instagram.com/madanivision/",
+            "externalLinkHtml": `<span class="no-underline">See more on my </span><a href="https://www.instagram.com/madanivision/" target="_blank">Instagram</a>`
+        }
+    ];
+  </script>
+  <script src="js/loadProjects.js"></script>
+</body>
+</html>
