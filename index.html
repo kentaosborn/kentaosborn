@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenta Osborn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+        .accordion-content.active {
+            max-height: 500px; /* Adjust this value if content is taller */
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-item {
+            flex-shrink: 0;
+            width: 100%;
+        }
+        .carousel-nav {
+            z-index: 10;
+            cursor: pointer;
+            user-select: none;
+            font-size: 2.5rem;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-500">
+
+    <div class="max-w-xl mx-auto py-12 px-6 lg:px-0">
+        <h1 class="text-xl font-medium mb-12 text-gray-700">Kenta Osborn</h1>
+
+        <!-- Content will be dynamically generated here -->
+        <div id="content-container"></div>
+    </div>
+
+    <script>
+        const contentData = [
+            {
+                title: 'Placeholder 1',
+                images: [
+                    { src: 'https://placehold.co/75x50/E5E7EB/4B5563?text=Placeholder+1A', footer: 'Image 1 Footer for Placeholder 1.' },
+                    { src: 'https://placehold.co/75x50/D1D5DB/4B5563?text=Placeholder+1B', footer: 'Image 2 Footer for Placeholder 1.' },
+                    { src: 'https://placehold.co/75x50/9CA3AF/1F2937?text=Placeholder+1C', footer: 'Image 3 Footer for Placeholder 1.' }
+                ]
+            },
+            {
+                title: 'Placeholder 2',
+                images: [
+                    { src: 'https://placehold.co/75x50/6B7280/D1D5DB?text=Placeholder+2A', footer: 'Image 1 Footer for Placeholder 2.' },
+                    { src: 'https://placehold.co/75x50/4B5563/E5E7EB?text=Placeholder+2B', footer: 'Image 2 Footer for Placeholder 2.' },
+                    { src: 'https://placehold.co/75x50/374151/D1D5DB?text=Placeholder+2C', footer: 'Image 3 Footer for Placeholder 2.' }
+                ]
+            },
+            {
+                title: 'Placeholder 3',
+                images: [
+                    { src: 'https://placehold.co/75x50/1F2937/F9FAFB?text=Placeholder+3A', footer: 'Image 1 Footer for Placeholder 3.' },
+                    { src: 'https://placehold.co/75x50/000000/FFFFFF?text=Placeholder+3B', footer: 'Image 2 Footer for Placeholder 3.' },
+                    { src: 'https://placehold.co/75x50/FFFFFF/000000?text=Placeholder+3C', footer: 'Image 3 Footer for Placeholder 3.' }
+                ]
+            },
+            {
+                title: 'Placeholder 4',
+                images: [
+                    { src: 'https://placehold.co/75x50/F9FAFB/1F2937?text=Placeholder+4A', footer: 'Image 1 Footer for Placeholder 4.' },
+                    { src: 'https://placehold.co/75x50/E5E7EB/374151?text=Placeholder+4B', footer: 'Image 2 Footer for Placeholder 4.' },
+                    { src: 'https://placehold.co/75x50/D1D5DB/4B5563?text=Placeholder+4C', footer: 'Image 3 Footer for Placeholder 4.' }
+                ]
+            },
+            {
+                title: 'Placeholder 5',
+                images: [
+                    { src: 'https://placehold.co/75x50/E5E7EB/4B5563?text=Placeholder+5A', footer: 'Image 1 Footer for Placeholder 5.' },
+                    { src: 'https://placehold.co/75x50/D1D5DB/4B5563?text=Placeholder+5B', footer: 'Image 2 Footer for Placeholder 5.' },
+                    { src: 'https://placehold.co/75x50/9CA3AF/1F2937?text=Placeholder+5C', footer: 'Image 3 Footer for Placeholder 5.' }
+                ]
+            },
+            {
+                title: 'Placeholder 6',
+                images: [
+                    { src: 'https://placehold.co/75x50/6B7280/D1D5DB?text=Placeholder+6A', footer: 'Image 1 Footer for Placeholder 6.' },
+                    { src: 'https://placehold.co/75x50/4B5563/E5E7EB?text=Placeholder+6B', footer: 'Image 2 Footer for Placeholder 6.' },
+                    { src: 'https://placehold.co/75x50/374151/D1D5DB?text=Placeholder+6C', footer: 'Image 3 Footer for Placeholder 6.' }
+                ]
+            },
+            {
+                title: 'Placeholder 7',
+                images: [
+                    { src: 'https://placehold.co/75x50/1F2937/F9FAFB?text=Placeholder+7A', footer: 'Image 1 Footer for Placeholder 7.' },
+                    { src: 'https://placehold.co/75x50/000000/FFFFFF?text=Placeholder+7B', footer: 'Image 2 Footer for Placeholder 7.' },
+                    { src: 'https://placehold.co/75x50/FFFFFF/000000?text=Placeholder+7C', footer: 'Image 3 Footer for Placeholder 7.' }
+                ]
+            },
+            {
+                title: 'Placeholder 8',
+                images: [
+                    { src: 'https://placehold.co/75x50/F9FAFB/1F2937?text=Placeholder+8A', footer: 'Image 1 Footer for Placeholder 8.' },
+                    { src: 'https://placehold.co/75x50/E5E7EB/374151?text=Placeholder+8B', footer: 'Image 2 Footer for Placeholder 8.' },
+                    { src: 'https://placehold.co/75x50/D1D5DB/4B5563?text=Placeholder+8C', footer: 'Image 3 Footer for Placeholder 8.' }
+                ]
+            },
+            {
+                title: 'Placeholder 9',
+                images: [
+                    { src: 'https://placehold.co/75x50/E5E7EB/4B5563?text=Placeholder+9A', footer: 'Image 1 Footer for Placeholder 9.' },
+                    { src: 'https://placehold.co/75x50/D1D5DB/4B5563?text=Placeholder+9B', footer: 'Image 2 Footer for Placeholder 9.' },
+                    { src: 'https://placehold.co/75x50/9CA3AF/1F2937?text=Placeholder+9C', footer: 'Image 3 Footer for Placeholder 9.' }
+                ]
+            },
+            {
+                title: 'Placeholder 10',
+                images: [
+                    { src: 'https://placehold.co/75x50/6B7280/D1D5DB?text=Placeholder+10A', footer: 'Image 1 Footer for Placeholder 10.' },
+                    { src: 'https://placehold.co/75x50/4B5563/E5E7EB?text=Placeholder+10B', footer: 'Image 2 Footer for Placeholder 10.' },
+                    { src: 'https://placehold.co/75x50/374151/D1D5DB?text=Placeholder+10C', footer: 'Image 3 Footer for Placeholder 10.' }
+                ]
+            },
+            {
+                title: 'Placeholder 11',
+                images: [
+                    { src: 'https://placehold.co/75x50/1F2937/F9FAFB?text=Placeholder+11A', footer: 'Image 1 Footer for Placeholder 11.' },
+                    { src: 'https://placehold.co/75x50/000000/FFFFFF?text=Placeholder+11B', footer: 'Image 2 Footer for Placeholder 11.' },
+                    { src: 'https://placehold.co/75x50/FFFFFF/000000?text=Placeholder+11C', footer: 'Image 3 Footer for Placeholder 11.' }
+                ]
+            },
+            {
+                title: 'Placeholder 12',
+                images: [
+                    { src: 'https://placehold.co/75x50/F9FAFB/1F2937?text=Placeholder+12A', footer: 'Image 1 Footer for Placeholder 12.' },
+                    { src: 'https://placehold.co/75x50/E5E7EB/374151?text=Placeholder+12B', footer: 'Image 2 Footer for Placeholder 12.' },
+                    { src: 'https://placehold.co/75x50/D1D5DB/4B5563?text=Placeholder+12C', footer: 'Image 3 Footer for Placeholder 12.' }
+                ]
+            },
+            {
+                title: 'Placeholder 13',
+                images: [
+                    { src: 'https://placehold.co/75x50/E5E7EB/4B5563?text=Placeholder+13A', footer: 'Image 1 Footer for Placeholder 13.' },
+                    { src: 'https://placehold.co/75x50/D1D5DB/4B5563?text=Placeholder+13B', footer: 'Image 2 Footer for Placeholder 13.' },
+                    { src: 'https://placehold.co/75x50/9CA3AF/1F2937?text=Placeholder+13C', footer: 'Image 3 Footer for Placeholder 13.' }
+                ]
+            },
+            {
+                title: 'Placeholder 14',
+                images: [
+                    { src: 'https://placehold.co/75x50/6B7280/D1D5DB?text=Placeholder+14A', footer: 'Image 1 Footer for Placeholder 14.' },
+                    { src: 'https://placehold.co/75x50/4B5563/E5E7EB?text=Placeholder+14B', footer: 'Image 2 Footer for Placeholder 14.' },
+                    { src: 'https://placehold.co/75x50/374151/D1D5DB?text=Placeholder+14C', footer: 'Image 3 Footer for Placeholder 14.' }
+                ]
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('content-container');
+
+            // Function to generate the HTML for each placeholder
+            const generatePlaceholderHTML = (item) => {
+                const carouselItemsHTML = item.images.map(image => `
+                    <div class="carousel-item">
+                        <div class="relative w-1/2">
+                            <img src="${image.src}" alt="${image.footer}" class="w-full h-auto block">
+                            <div class="absolute inset-y-0 left-0 flex items-center carousel-nav prev">
+                                <span class="text-gray-400 hover:text-gray-700 transition-colors duration-200">&#8249;</span>
+                            </div>
+                            <div class="absolute inset-y-0 right-0 flex items-center carousel-nav next">
+                                <span class="text-gray-400 hover:text-gray-700 transition-colors duration-200">&#8250;</span>
+                            </div>
+                        </div>
+                        <p class="mt-2 text-sm text-gray-500">${image.footer}</p>
+                    </div>
+                `).join('');
+
+                return `
+                    <div class="mb-4">
+                        <div class="cursor-pointer py-1.5 accordion-header">
+                            <h2 class="text-lg font-normal">${item.title}</h2>
+                        </div>
+                        <div class="accordion-content pt-2 leading-relaxed">
+                            <div class="relative w-full carousel-container" data-carousel-index="0">
+                                <div class="carousel-track">
+                                    ${carouselItemsHTML}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            };
+
+            // Generate all content and insert into the container
+            const allContentHTML = contentData.map(generatePlaceholderHTML).join('');
+            container.innerHTML = allContentHTML;
+
+            // Re-attach event listeners after dynamic content is loaded
+            function toggleContent(element) {
+                const parent = element.parentElement;
+                const content = parent.querySelector('.accordion-content');
+                content.classList.toggle('active');
+            }
+
+            function navigateCarousel(element, direction) {
+                const carouselContainer = element.closest('.carousel-container');
+                if (!carouselContainer) return;
+                const track = carouselContainer.querySelector('.carousel-track');
+                const items = carouselContainer.querySelectorAll('.carousel-item');
+                const totalItems = items.length;
+                let currentIndex = parseInt(carouselContainer.dataset.carouselIndex, 10);
+                
+                let newIndex = currentIndex;
+                if (direction === 'next') {
+                    newIndex = (currentIndex + 1) % totalItems;
+                } else if (direction === 'prev') {
+                    newIndex = (currentIndex - 1 + totalItems) % totalItems;
+                }
+                
+                carouselContainer.dataset.carouselIndex = newIndex;
+                track.style.transform = `translateX(-${newIndex * 100}%)`;
+            }
+
+            document.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', (event) => {
+                    toggleContent(event.currentTarget);
+                });
+            });
+
+            document.querySelectorAll('.carousel-nav.prev').forEach(nav => {
+                nav.addEventListener('click', (event) => {
+                    navigateCarousel(event.currentTarget, 'prev');
+                    event.stopPropagation();
+                });
+            });
+
+            document.querySelectorAll('.carousel-nav.next').forEach(nav => {
+                nav.addEventListener('click', (event) => {
+                    navigateCarousel(event.currentTarget, 'next');
+                    event.stopPropagation();
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
