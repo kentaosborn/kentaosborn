@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE ahtml>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,190 +7,126 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-family: 'Courier', monospace;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            letter-spacing: -0.01em;
         }
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 1s ease-in-out;
+
+        /* Style for the title */
+        .interactive-title {
+            display: inline-block;
+            width: fit-content;
         }
-        .accordion-content.active {
-            max-height: 500px; /* Adjust this value if content is taller */
+        .clickable-number {
+            cursor: default;
+            display: inline-block;
         }
-        .carousel-track {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
+
+        /* Style to vertically align the numbers within the brackets */
+        .number-aligned {
+            position: relative;
+            top: 0.1em;
         }
-        .carousel-item {
-            flex-shrink: 0;
-            width: 100%;
+
+        /* Styles for the image overlay */
+        #image-overlay {
+            position: fixed;
+            z-index: -1; /* Place it below the text */
+            opacity: 0;
+            pointer-events: none; /* Allows clicks to pass through */
+            left: 20px;
         }
-        .carousel-nav {
-            z-index: 10;
-            cursor: pointer;
-            user-select: none;
-            font-size: 2.5rem;
-            line-height: 1;
+
+        #image-overlay.active {
+            opacity: 1;
+        }
+
+        #display-image {
+            width: auto;
+            height: auto;
+            object-fit: contain;
         }
     </style>
 </head>
-<body class="bg-white text-gray-500">
+<body class="bg-white text-black">
 
-    <div class="max-w-xl py-12 px-10">
-        <h1 class="text-md font-medium mb-4 text-gray-700">Kenta Osborn</h1>
+    <div class="max-w-xl relative z-10">
+        <h1 class="text-md font-medium mb-4 text-black">Kenta Osborn</h1>
 
         <!-- Content will be dynamically generated here -->
-        <div id="content-container"></div>
+        <div id="content-container" class="ml-10 px-10"></div>
+    </div>
+
+    <!-- Image overlay container -->
+    <div id="image-overlay">
+        <img id="display-image" src="" alt="Hover image">
     </div>
 
     <script>
         const contentData = [
-            {
-                title: 'Placeholder 1',
-                images: [
-                    { src: 'https://placehold.co/75x50/E5E7EB/4B5563?text=Placeholder+1A', footer: 'Image 1 Footer for Placeholder 1.' },
-                    { src: 'https://placehold.co/75x50/D1D5DB/4B5563?text=Placeholder+1B', footer: 'Image 2 Footer for Placeholder 1.' },
-                    { src: 'https://placehold.co/75x50/9CA3AF/1F2937?text=Placeholder+1C', footer: 'Image 3 Footer for Placeholder 1.' }
-                ]
-            },
-            {
-                title: 'Placeholder 2',
-                images: [
-                    { src: 'https://placehold.co/75x50/6B7280/D1D5DB?text=Placeholder+2A', footer: 'Image 1 Footer for Placeholder 2.' },
-                    { src: 'https://placehold.co/75x50/4B5563/E5E7EB?text=Placeholder+2B', footer: 'Image 2 Footer for Placeholder 2.' },
-                    { src: 'https://placehold.co/75x50/374151/D1D5DB?text=Placeholder+2C', footer: 'Image 3 Footer for Placeholder 2.' }
-                ]
-            },
-            {
-                title: 'Placeholder 3',
-                images: [
-                    { src: 'https://placehold.co/75x50/1F2937/F9FAFB?text=Placeholder+3A', footer: 'Image 1 Footer for Placeholder 3.' },
-                    { src: 'https://placehold.co/75x50/000000/FFFFFF?text=Placeholder+3B', footer: 'Image 2 Footer for Placeholder 3.' },
-                    { src: 'https://placehold.co/75x50/FFFFFF/000000?text=Placeholder+3C', footer: 'Image 3 Footer for Placeholder 3.' }
-                ]
-            },
-            {
-                title: 'Placeholder 4',
-                images: [
-                    { src: 'https://placehold.co/75x50/F9FAFB/1F2937?text=Placeholder+4A', footer: 'Image 1 Footer for Placeholder 4.' },
-                    { src: 'https://placehold.co/75x50/E5E7EB/374151?text=Placeholder+4B', footer: 'Image 2 Footer for Placeholder 4.' },
-                    { src: 'https://placehold.co/75x50/D1D5DB/4B5563?text=Placeholder+4C', footer: 'Image 3 Footer for Placeholder 4.' }
-                ]
-            },
-            {
-                title: 'Placeholder 5',
-                images: [
-                    { src: 'https://placehold.co/75x50/E5E7EB/4B5563?text=Placeholder+5A', footer: 'Image 1 Footer for Placeholder 5.' },
-                    { src: 'https://placehold.co/75x50/D1D5DB/4B5563?text=Placeholder+5B', footer: 'Image 2 Footer for Placeholder 5.' },
-                    { src: 'https://placehold.co/75x50/9CA3AF/1F2937?text=Placeholder+5C', footer: 'Image 3 Footer for Placeholder 5.' }
-                ]
-            },
-            {
-                title: 'Placeholder 6',
-                images: [
-                    { src: 'https://placehold.co/75x50/6B7280/D1D5DB?text=Placeholder+6A', footer: 'Image 1 Footer for Placeholder 6.' },
-                    { src: 'https://placehold.co/75x50/4B5563/E5E7EB?text=Placeholder+6B', footer: 'Image 2 Footer for Placeholder 6.' },
-                    { src: 'https://placehold.co/75x50/374151/D1D5DB?text=Placeholder+6C', footer: 'Image 3 Footer for Placeholder 6.' }
-                ]
-            },
-            {
-                title: 'Placeholder 7',
-                images: [
-                    { src: 'https://placehold.co/75x50/1F2937/F9FAFB?text=Placeholder+7A', footer: 'Image 1 Footer for Placeholder 7.' },
-                    { src: 'https://placehold.co/75x50/000000/FFFFFF?text=Placeholder+7B', footer: 'Image 2 Footer for Placeholder 7.' },
-                    { src: 'https://placehold.co/75x50/FFFFFF/000000?text=Placeholder+7C', footer: 'Image 3 Footer for Placeholder 7.' }
-                ]
-            },
-            {
-                title: 'Placeholder 8',
-                images: [
-                    { src: 'https://placehold.co/75x50/F9FAFB/1F2937?text=Placeholder+8A', footer: 'Image 1 Footer for Placeholder 8.' },
-                    { src: 'https://placehold.co/75x50/E5E7EB/374151?text=Placeholder+8B', footer: 'Image 2 Footer for Placeholder 8.' },
-                    { src: 'https://placehold.co/75x50/D1D5DB/4B5563?text=Placeholder+8C', footer: 'Image 3 Footer for Placeholder 8.' }
-                ]
-            },
-            {
-                title: 'Placeholder 9',
-                images: [
-                    { src: 'https://placehold.co/75x50/E5E7EB/4B5563?text=Placeholder+9A', footer: 'Image 1 Footer for Placeholder 9.' },
-                    { src: 'https://placehold.co/75x50/D1D5DB/4B5563?text=Placeholder+9B', footer: 'Image 2 Footer for Placeholder 9.' },
-                    { src: 'https://placehold.co/75x50/9CA3AF/1F2937?text=Placeholder+9C', footer: 'Image 3 Footer for Placeholder 9.' }
-                ]
-            },
-            {
-                title: 'Placeholder 10',
-                images: [
-                    { src: 'https://placehold.co/75x50/6B7280/D1D5DB?text=Placeholder+10A', footer: 'Image 1 Footer for Placeholder 10.' },
-                    { src: 'https://placehold.co/75x50/4B5563/E5E7EB?text=Placeholder+10B', footer: 'Image 2 Footer for Placeholder 10.' },
-                    { src: 'https://placehold.co/75x50/374151/D1D5DB?text=Placeholder+10C', footer: 'Image 3 Footer for Placeholder 10.' }
-                ]
-            },
-            {
-                title: 'Placeholder 11',
-                images: [
-                    { src: 'https://placehold.co/75x50/1F2937/F9FAFB?text=Placeholder+11A', footer: 'Image 1 Footer for Placeholder 11.' },
-                    { src: 'https://placehold.co/75x50/000000/FFFFFF?text=Placeholder+11B', footer: 'Image 2 Footer for Placeholder 11.' },
-                    { src: 'https://placehold.co/75x50/FFFFFF/000000?text=Placeholder+11C', footer: 'Image 3 Footer for Placeholder 11.' }
-                ]
-            },
-            {
-                title: 'Placeholder 12',
-                images: [
-                    { src: 'https://placehold.co/75x50/F9FAFB/1F2937?text=Placeholder+12A', footer: 'Image 1 Footer for Placeholder 12.' },
-                    { src: 'https://placehold.co/75x50/E5E7EB/374151?text=Placeholder+12B', footer: 'Image 2 Footer for Placeholder 12.' },
-                    { src: 'https://placehold.co/75x50/D1D5DB/4B5563?text=Placeholder+12C', footer: 'Image 3 Footer for Placeholder 12.' }
-                ]
-            },
-            {
-                title: 'Placeholder 13',
-                images: [
-                    { src: 'https://placehold.co/75x50/E5E7EB/4B5563?text=Placeholder+13A', footer: 'Image 1 Footer for Placeholder 13.' },
-                    { src: 'https://placehold.co/75x50/D1D5DB/4B5563?text=Placeholder+13B', footer: 'Image 2 Footer for Placeholder 13.' },
-                    { src: 'https://placehold.co/75x50/9CA3AF/1F2937?text=Placeholder+13C', footer: 'Image 3 Footer for Placeholder 13.' }
-                ]
-            },
-            {
-                title: 'Placeholder 14',
-                images: [
-                    { src: 'https://placehold.co/75x50/6B7280/D1D5DB?text=Placeholder+14A', footer: 'Image 1 Footer for Placeholder 14.' },
-                    { src: 'https://placehold.co/75x50/4B5563/E5E7EB?text=Placeholder+14B', footer: 'Image 2 Footer for Placeholder 14.' },
-                    { src: 'https://placehold.co/75x50/374151/D1D5DB?text=Placeholder+14C', footer: 'Image 3 Footer for Placeholder 14.' }
-                ]
-            }
+            { title: 'Placeholder 1' },
+            { title: 'Placeholder 2' },
+            { title: 'Placeholder 3' },
+            { title: 'Placeholder 4' },
+            { title: 'Placeholder 5' },
+            { title: 'Placeholder 6' },
+            { title: 'Placeholder 7' },
+            { title: 'Placeholder 8' },
+            { title: 'Placeholder 9' },
+            { title: 'Placeholder 10' },
+            { title: 'Placeholder 11' },
+            { title: 'Placeholder 12' },
+            { title: 'Placeholder 13' },
+            { title: 'Placeholder 14' }
+        ];
+
+        // Placeholder images, one for each number
+        const imageUrls = [
+            'https://placehold.co/600x400/FF5733/FFFFFF?text=Image+01',
+            'https://placehold.co/600x400/33FF57/FFFFFF?text=Image+02',
+            'https://placehold.co/600x400/5733FF/FFFFFF?text=Image+03',
+            'https://placehold.co/600x400/FFD133/FFFFFF?text=Image+04',
+            'https://placehold.co/600x400/33FFD1/FFFFFF?text=Image+05',
+            'https://placehold.co/600x400/D133FF/FFFFFF?text=Image+06',
+            'https://placehold.co/600x400/57FF33/FFFFFF?text=Image+07',
+            'https://placehold.co/600x400/FF3357/FFFFFF?text=Image+08',
+            'https://placehold.co/600x400/33A3FF/FFFFFF?text=Image+09',
+            'https://placehold.co/600x400/A3FF33/FFFFFF?text=Image+10'
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
             const container = document.getElementById('content-container');
+            const imageOverlay = document.getElementById('image-overlay');
+            const displayImage = document.getElementById('display-image');
 
             // Function to generate the HTML for each placeholder
             const generatePlaceholderHTML = (item) => {
-                const carouselItemsHTML = item.images.map(image => `
-                    <div class="carousel-item">
-                        <div class="relative w-1/2">
-                            <img src="${image.src}" alt="${image.footer}" class="w-full h-auto block">
-                            <div class="absolute inset-y-0 left-0 flex items-center carousel-nav prev">
-                                <span class="text-gray-400 hover:text-gray-700 transition-colors duration-200">&#8249;</span>
-                            </div>
-                            <div class="absolute inset-y-0 right-0 flex items-center carousel-nav next">
-                                <span class="text-gray-400 hover:text-gray-700 transition-colors duration-200">&#8250;</span>
-                            </div>
-                        </div>
-                        <p class="mt-2 text-sm text-gray-500">${image.footer}</p>
-                    </div>
-                `).join('');
+                let firstRowHtml = '';
+                for (let i = 1; i <= 5; i++) {
+                    const paddedNumber = String(i).padStart(2, '0');
+                    firstRowHtml += `<span class="clickable-number select-none" data-number="${i}">[<span class="number-aligned">${paddedNumber}</span>]</span>`;
+                    if (i < 5) {
+                        firstRowHtml += '&nbsp;&nbsp;';
+                    }
+                }
+
+                let secondRowHtml = '';
+                for (let i = 6; i <= 10; i++) {
+                    const paddedNumber = String(i).padStart(2, '0');
+                    secondRowHtml += `<span class="clickable-number select-none" data-number="${i}">[<span class="number-aligned">${paddedNumber}</span>]</span>`;
+                    if (i < 10) {
+                        secondRowHtml += '&nbsp;&nbsp;';
+                    }
+                }
 
                 return `
                     <div class="mb-1">
-                        <div class="cursor-pointer py-1.5 accordion-header">
-                            <h2 class="text-md font-normal">${item.title}</h2>
-                        </div>
-                        <div class="accordion-content pt-2 leading-relaxed">
-                            <div class="relative w-full carousel-container" data-carousel-index="0">
-                                <div class="carousel-track">
-                                    ${carouselItemsHTML}
-                                </div>
+                        <h2 class="text-md font-normal interactive-title">${item.title}</h2>
+                        <div class="pt-2 leading-relaxed">
+                            <div class="text-md pl-8">
+                                <div class="mb-2">${firstRowHtml}</div>
+                                <div class="mb-4">${secondRowHtml}</div>
                             </div>
                         </div>
                     </div>
@@ -201,50 +137,39 @@
             const allContentHTML = contentData.map(generatePlaceholderHTML).join('');
             container.innerHTML = allContentHTML;
 
-            // Re-attach event listeners after dynamic content is loaded
-            function toggleContent(element) {
-                const parent = element.parentElement;
-                const content = parent.querySelector('.accordion-content');
-                content.classList.toggle('active');
-            }
+            // Event listener for hovering over numbers
+            container.addEventListener('mouseover', (event) => {
+                const numberElement = event.target.closest('.clickable-number');
+                if (numberElement) {
+                    const number = parseInt(numberElement.dataset.number, 10);
+                    if (number >= 1 && number <= 10) {
+                        let targetElement = numberElement;
+                        // If the number is in the second row, find the corresponding number in the first row within the same parent container
+                        if (number > 5) {
+                            const placeholderContainer = numberElement.closest('.mb-1');
+                            const correspondingNumber = number - 5;
+                            targetElement = placeholderContainer.querySelector(`.clickable-number[data-number="${correspondingNumber}"]`);
+                        }
+                        
+                        // Get the position of the target element
+                        const rect = targetElement.getBoundingClientRect();
 
-            function navigateCarousel(element, direction) {
-                const carouselContainer = element.closest('.carousel-container');
-                if (!carouselContainer) return;
-                const track = carouselContainer.querySelector('.carousel-track');
-                const items = carouselContainer.querySelectorAll('.carousel-item');
-                const totalItems = items.length;
-                let currentIndex = parseInt(carouselContainer.dataset.carouselIndex, 10);
-                
-                let newIndex = currentIndex;
-                if (direction === 'next') {
-                    newIndex = (currentIndex + 1) % totalItems;
-                } else if (direction === 'prev') {
-                    newIndex = (currentIndex - 1 + totalItems) % totalItems;
+                        // Position the image overlay based on the target's top position
+                        imageOverlay.style.top = `${rect.top}px`;
+
+                        // Set image source and make it visible
+                        displayImage.src = imageUrls[number - 1];
+                        imageOverlay.classList.add('active');
+                    }
                 }
-                
-                carouselContainer.dataset.carouselIndex = newIndex;
-                track.style.transform = `translateX(-${newIndex * 100}%)`;
-            }
-
-            document.querySelectorAll('.accordion-header').forEach(header => {
-                header.addEventListener('click', (event) => {
-                    toggleContent(event.currentTarget);
-                });
             });
 
-            document.querySelectorAll('.carousel-nav.prev').forEach(nav => {
-                nav.addEventListener('click', (event) => {
-                    navigateCarousel(event.currentTarget, 'prev');
-                    event.stopPropagation();
-                });
-            });
-
-            document.querySelectorAll('.carousel-nav.next').forEach(nav => {
-                nav.addEventListener('click', (event) => {
-                    navigateCarousel(event.currentTarget, 'next');
-                    event.stopPropagation();
-                });
+            // Event listener for leaving the numbers area
+            container.addEventListener('mouseout', (event) => {
+                const numberElement = event.target.closest('.clickable-number');
+                if (numberElement) {
+                    imageOverlay.classList.remove('active');
+                }
             });
         });
     </script>
