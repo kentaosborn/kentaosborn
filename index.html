@@ -65,35 +65,75 @@
 
     <script>
         const contentData = [
-            { title: 'Placeholder 1' },
-            { title: 'Placeholder 2' },
-            { title: 'Placeholder 3' },
-            { title: 'Placeholder 4' },
-            { title: 'Placeholder 5' },
-            { title: 'Placeholder 6' },
-            { title: 'Placeholder 7' },
-            { title: 'Placeholder 8' },
-            { title: 'Placeholder 9' },
-            { title: 'Placeholder 10' },
-            { title: 'Placeholder 11' },
-            { title: 'Placeholder 12' },
-            { title: 'Placeholder 13' },
-            { title: 'Placeholder 14' }
+            { title: 'music' },
+            { title: 'digital art' },
+            { title: 'events' },
+            { title: 'video' },
+            { title: 'photo' },
+            { title: 'flyers' },
+            { title: 'clothing' },
+            { title: 'web design' },
         ];
 
-        // Placeholder images, one for each number
-        const imageUrls = [
-            'https://placehold.co/600x400/FF5733/FFFFFF?text=Image+01',
-            'https://placehold.co/600x400/33FF57/FFFFFF?text=Image+02',
-            'https://placehold.co/600x400/5733FF/FFFFFF?text=Image+03',
-            'https://placehold.co/600x400/FFD133/FFFFFF?text=Image+04',
-            'https://placehold.co/600x400/33FFD1/FFFFFF?text=Image+05',
-            'https://placehold.co/600x400/D133FF/FFFFFF?text=Image+06',
-            'https://placehold.co/600x400/57FF33/FFFFFF?text=Image+07',
-            'https://placehold.co/600x400/FF3357/FFFFFF?text=Image+08',
-            'https://placehold.co/600x400/33A3FF/FFFFFF?text=Image+09',
-            'https://placehold.co/600x400/A3FF33/FFFFFF?text=Image+10'
-        ];
+        // Placeholder images, now unique for each category
+        const placeholderImages = {
+            'music': [
+                'https://placehold.co/600x400/292F36/FFFFFF?text=Music+01', 'https://placehold.co/600x400/292F36/FFFFFF?text=Music+02',
+                'https://placehold.co/600x400/292F36/FFFFFF?text=Music+03', 'https://placehold.co/600x400/292F36/FFFFFF?text=Music+04',
+                'https://placehold.co/600x400/292F36/FFFFFF?text=Music+05', 'https://placehold.co/600x400/292F36/FFFFFF?text=Music+06',
+                'https://placehold.co/600x400/292F36/FFFFFF?text=Music+07', 'https://placehold.co/600x400/292F36/FFFFFF?text=Music+08',
+                'https://placehold.co/600x400/292F36/FFFFFF?text=Music+09', 'https://placehold.co/600x400/292F36/FFFFFF?text=Music+10'
+            ],
+            'digital art': [
+                'https://placehold.co/600x400/F17105/FFFFFF?text=Digital+Art+01', 'https://placehold.co/600x400/F17105/FFFFFF?text=Digital+Art+02',
+                'https://placehold.co/600x400/F17105/FFFFFF?text=Digital+Art+03', 'https://placehold.co/600x400/F17105/FFFFFF?text=Digital+Art+04',
+                'https://placehold.co/600x400/F17105/FFFFFF?text=Digital+Art+05', 'https://placehold.co/600x400/F17105/FFFFFF?text=Digital+Art+06',
+                'https://placehold.co/600x400/F17105/FFFFFF?text=Digital+Art+07', 'https://placehold.co/600x400/F17105/FFFFFF?text=Digital+Art+08',
+                'https://placehold.co/600x400/F17105/FFFFFF?text=Digital+Art+09', 'https://placehold.co/600x400/F17105/FFFFFF?text=Digital+Art+10'
+            ],
+            'events': [
+                'https://placehold.co/600x400/D00000/FFFFFF?text=Events+01', 'https://placehold.co/600x400/D00000/FFFFFF?text=Events+02',
+                'https://placehold.co/600x400/D00000/FFFFFF?text=Events+03', 'https://placehold.co/600x400/D00000/FFFFFF?text=Events+04',
+                'https://placehold.co/600x400/D00000/FFFFFF?text=Events+05', 'https://placehold.co/600x400/D00000/FFFFFF?text=Events+06',
+                'https://placehold.co/600x400/D00000/FFFFFF?text=Events+07', 'https://placehold.co/600x400/D00000/FFFFFF?text=Events+08',
+                'https://placehold.co/600x400/D00000/FFFFFF?text=Events+09', 'https://placehold.co/600x400/D00000/FFFFFF?text=Events+10'
+            ],
+            'video': [
+                'https://placehold.co/600x400/FFC900/FFFFFF?text=Video+01', 'https://placehold.co/600x400/FFC900/FFFFFF?text=Video+02',
+                'https://placehold.co/600x400/FFC900/FFFFFF?text=Video+03', 'https://placehold.co/600x400/FFC900/FFFFFF?text=Video+04',
+                'https://placehold.co/600x400/FFC900/FFFFFF?text=Video+05', 'https://placehold.co/600x400/FFC900/FFFFFF?text=Video+06',
+                'https://placehold.co/600x400/FFC900/FFFFFF?text=Video+07', 'https://placehold.co/600x400/FFC900/FFFFFF?text=Video+08',
+                'https://placehold.co/600x400/FFC900/FFFFFF?text=Video+09', 'https://placehold.co/600x400/FFC900/FFFFFF?text=Video+10'
+            ],
+            'photo': [
+                'https://placehold.co/600x400/A01A7D/FFFFFF?text=Photo+01', 'https://placehold.co/600x400/A01A7D/FFFFFF?text=Photo+02',
+                'https://placehold.co/600x400/A01A7D/FFFFFF?text=Photo+03', 'https://placehold.co/600x400/A01A7D/FFFFFF?text=Photo+04',
+                'https://placehold.co/600x400/A01A7D/FFFFFF?text=Photo+05', 'https://placehold.co/600x400/A01A7D/FFFFFF?text=Photo+06',
+                'https://placehold.co/600x400/A01A7D/FFFFFF?text=Photo+07', 'https://placehold.co/600x400/A01A7D/FFFFFF?text=Photo+08',
+                'https://placehold.co/600x400/A01A7D/FFFFFF?text=Photo+09', 'https://placehold.co/600x400/A01A7D/FFFFFF?text=Photo+10'
+            ],
+            'flyers': [
+                'https://placehold.co/600x400/155F80/FFFFFF?text=Flyers+01', 'https://placehold.co/600x400/155F80/FFFFFF?text=Flyers+02',
+                'https://placehold.co/600x400/155F80/FFFFFF?text=Flyers+03', 'https://placehold.co/600x400/155F80/FFFFFF?text=Flyers+04',
+                'https://placehold.co/600x400/155F80/FFFFFF?text=Flyers+05', 'https://placehold.co/600x400/155F80/FFFFFF?text=Flyers+06',
+                'https://placehold.co/600x400/155F80/FFFFFF?text=Flyers+07', 'https://placehold.co/600x400/155F80/FFFFFF?text=Flyers+08',
+                'https://placehold.co/600x400/155F80/FFFFFF?text=Flyers+09', 'https://placehold.co/600x400/155F80/FFFFFF?text=Flyers+10'
+            ],
+            'clothing': [
+                'https://placehold.co/600x400/90B77D/FFFFFF?text=Clothing+01', 'https://placehold.co/600x400/90B77D/FFFFFF?text=Clothing+02',
+                'https://placehold.co/600x400/90B77D/FFFFFF?text=Clothing+03', 'https://placehold.co/600x400/90B77D/FFFFFF?text=Clothing+04',
+                'https://placehold.co/600x400/90B77D/FFFFFF?text=Clothing+05', 'https://placehold.co/600x400/90B77D/FFFFFF?text=Clothing+06',
+                'https://placehold.co/600x400/90B77D/FFFFFF?text=Clothing+07', 'https://placehold.co/600x400/90B77D/FFFFFF?text=Clothing+08',
+                'https://placehold.co/600x400/90B77D/FFFFFF?text=Clothing+09', 'https://placehold.co/600x400/90B77D/FFFFFF?text=Clothing+10'
+            ],
+            'web design': [
+                'https://placehold.co/600x400/3A0CA3/FFFFFF?text=Web+Design+01', 'https://placehold.co/600x400/3A0CA3/FFFFFF?text=Web+Design+02',
+                'https://placehold.co/600x400/3A0CA3/FFFFFF?text=Web+Design+03', 'https://placehold.co/600x400/3A0CA3/FFFFFF?text=Web+Design+04',
+                'https://placehold.co/600x400/3A0CA3/FFFFFF?text=Web+Design+05', 'https://placehold.co/600x400/3A0CA3/FFFFFF?text=Web+Design+06',
+                'https://placehold.co/600x400/3A0CA3/FFFFFF?text=Web+Design+07', 'https://placehold.co/600x400/3A0CA3/FFFFFF?text=Web+Design+08',
+                'https://placehold.co/600x400/3A0CA3/FFFFFF?text=Web+Design+09', 'https://placehold.co/600x400/3A0CA3/FFFFFF?text=Web+Design+10'
+            ]
+        };
 
         document.addEventListener('DOMContentLoaded', () => {
             const container = document.getElementById('content-container');
@@ -142,11 +182,15 @@
                 const numberElement = event.target.closest('.clickable-number');
                 if (numberElement) {
                     const number = parseInt(numberElement.dataset.number, 10);
-                    if (number >= 1 && number <= 10) {
+                    const placeholderContainer = numberElement.closest('.mb-1');
+                    const placeholderTitle = placeholderContainer.querySelector('.interactive-title').textContent;
+                    
+                    const imageUrls = placeholderImages[placeholderTitle];
+                    
+                    if (imageUrls && number >= 1 && number <= 10) {
                         let targetElement = numberElement;
                         // If the number is in the second row, find the corresponding number in the first row within the same parent container
                         if (number > 5) {
-                            const placeholderContainer = numberElement.closest('.mb-1');
                             const correspondingNumber = number - 5;
                             targetElement = placeholderContainer.querySelector(`.clickable-number[data-number="${correspondingNumber}"]`);
                         }
