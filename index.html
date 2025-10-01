@@ -11,16 +11,25 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             letter-spacing: -0.01em;
+            padding: 2rem; /* Add overall padding for better display */
         }
 
-        /* Style for the title */
-        .interactive-title {
-            display: inline-block;
-            width: fit-content;
+        /* Styles for the interactive list items */
+        .interactive-header {
+            border-bottom: 1px solid #e5e5e5; /* Subtle separator */
+            padding-bottom: 4px;
+            padding-top: 4px;
+            margin-bottom: 8px;
+            user-select: none;
         }
+
         .clickable-number {
-            cursor: default;
+            cursor: pointer; /* Change cursor to indicate clickability */
             display: inline-block;
+            transition: color 0.1s;
+        }
+        .clickable-number:hover {
+            color: #4a5568; /* Slightly darker grey on number hover */
         }
 
         /* Style to vertically align the numbers within the brackets */
@@ -32,10 +41,13 @@
         /* Styles for the image overlay */
         #image-overlay {
             position: fixed;
-            z-index: -1; /* Place it below the text */
+            z-index: 10; /* Bring overlay slightly forward */
             opacity: 0;
             pointer-events: none; /* Allows clicks to pass through */
-            left: 20px;
+            left: 20px; /* Fixed position 20px from the left edge of the viewport */
+            top: 50%;
+            transform: translateY(-50%);
+            /* Transition removed for instant image appearance */
         }
 
         #image-overlay.active {
@@ -43,24 +55,33 @@
         }
 
         #display-image {
+            /* Updated constraints: 
+               1. Adapt to image size (width: auto, height: auto).
+               2. Cannot exceed 1500px in any dimension (max-width/max-height: 1500px).
+               3. Must be constrained by the viewport size (using min() with 90vw/90vh).
+            */
+            max-width: min(1500px, 90vw); 
+            max-height: min(1500px, 90vh); 
             width: auto;
             height: auto;
             object-fit: contain;
+            /* Rounded corners removed for sharp edges */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
     </style>
 </head>
 <body class="bg-white text-black">
 
-    <div class="max-w-xl relative z-10">
-        <h1 class="text-md font-medium mb-4 text-black">Kenta Osborn</h1>
+    <div class="max-w-xl relative z-20">
+        <h1 class="text-xl font-medium mb-8 text-black">Kenta Osborn</h1>
 
         <!-- Content will be dynamically generated here -->
-        <div id="content-container" class="ml-10 px-10"></div>
+        <div id="content-container" class="space-y-4"></div>
     </div>
 
     <!-- Image overlay container -->
     <div id="image-overlay">
-        <img id="display-image" src="" alt="Hover image">
+        <img id="display-image" src="" alt="Click image" onerror="console.error('Image failed to load. Check if the URL is accessible from the web.')">
     </div>
 
     <script>
@@ -73,65 +94,54 @@
             { title: 'flyers' },
             { title: 'clothing' },
             { title: 'web design' },
+            { title: 'contact' },
         ];
 
-        // Placeholder images, now unique for each category
+        // Categories that will link to an external URL instead of showing an image
+        const linkingCategories = ['music', 'events', 'video', 'web design'];
+
+        // Placeholder images (used for Digital Art, Photo, Flyers, Clothing)
+        // Note: Flyers now uses a 4:5 aspect ratio (e.g., 400x500) to represent 1080x1350.
         const placeholderImages = {
-            'music': [
-                'https://placehold.co/600x400/292F36/FFFFFF?text=Music+01', 'https://placehold.co/600x400/292F36/FFFFFF?text=Music+02',
-                'https://placehold.co/600x400/292F36/FFFFFF?text=Music+03', 'https://placehold.co/600x400/292F36/FFFFFF?text=Music+04',
-                'https://placehold.co/600x400/292F36/FFFFFF?text=Music+05', 'https://placehold.co/600x400/292F36/FFFFFF?text=Music+06',
-                'https://placehold.co/600x400/292F36/FFFFFF?text=Music+07', 'https://placehold.co/600x400/292F36/FFFFFF?text=Music+08',
-                'https://placehold.co/600x400/292F36/FFFFFF?text=Music+09', 'https://placehold.co/600x400/292F36/FFFFFF?text=Music+10'
-            ],
             'digital art': [
-                'https://placehold.co/600x400/F17105/FFFFFF?text=Digital+Art+01', 'https://placehold.co/600x400/F17105/FFFFFF?text=Digital+Art+02',
-                'https://placehold.co/600x400/F17105/FFFFFF?text=Digital+Art+03', 'https://placehold.co/600x400/F17105/FFFFFF?text=Digital+Art+04',
-                'https://placehold.co/600x400/F17105/FFFFFF?text=Digital+Art+05', 'https://placehold.co/600x400/F17105/FFFFFF?text=Digital+Art+06',
-                'https://placehold.co/600x400/F17105/FFFFFF?text=Digital+Art+07', 'https://placehold.co/600x400/F17105/FFFFFF?text=Digital+Art+08',
-                'https://placehold.co/600x400/F17105/FFFFFF?text=Digital+Art+09', 'https://placehold.co/600x400/F17105/FFFFFF?text=Digital+Art+10'
-            ],
-            'events': [
-                'https://placehold.co/600x400/D00000/FFFFFF?text=Events+01', 'https://placehold.co/600x400/D00000/FFFFFF?text=Events+02',
-                'https://placehold.co/600x400/D00000/FFFFFF?text=Events+03', 'https://placehold.co/600x400/D00000/FFFFFF?text=Events+04',
-                'https://placehold.co/600x400/D00000/FFFFFF?text=Events+05', 'https://placehold.co/600x400/D00000/FFFFFF?text=Events+06',
-                'https://placehold.co/600x400/D00000/FFFFFF?text=Events+07', 'https://placehold.co/600x400/D00000/FFFFFF?text=Events+08',
-                'https://placehold.co/600x400/D00000/FFFFFF?text=Events+09', 'https://placehold.co/600x400/D00000/FFFFFF?text=Events+10'
-            ],
-            'video': [
-                'https://placehold.co/600x400/FFC900/FFFFFF?text=Video+01', 'https://placehold.co/600x400/FFC900/FFFFFF?text=Video+02',
-                'https://placehold.co/600x400/FFC900/FFFFFF?text=Video+03', 'https://placehold.co/600x400/FFC900/FFFFFF?text=Video+04',
-                'https://placehold.co/600x400/FFC900/FFFFFF?text=Video+05', 'https://placehold.co/600x400/FFC900/FFFFFF?text=Video+06',
-                'https://placehold.co/600x400/FFC900/FFFFFF?text=Video+07', 'https://placehold.co/600x400/FFC900/FFFFFF?text=Video+08',
-                'https://placehold.co/600x400/FFC900/FFFFFF?text=Video+09', 'https://placehold.co/600x400/FFC900/FFFFFF?text=Video+10'
+                'https://kentaosborn.github.io/kentaosborn/images/img12.jpg', 'https://kentaosborn.github.io/kentaosborn/images/playinggod.jpg', // Testing adaptive sizes
+                'https://kentaosborn.github.io/kentaosborn/images/playinggod2.jpg'
             ],
             'photo': [
-                'https://placehold.co/600x400/A01A7D/FFFFFF?text=Photo+01', 'https://placehold.co/600x400/A01A7D/FFFFFF?text=Photo+02',
-                'https://placehold.co/600x400/A01A7D/FFFFFF?text=Photo+03', 'https://placehold.co/600x400/A01A7D/FFFFFF?text=Photo+04',
-                'https://placehold.co/600x400/A01A7D/FFFFFF?text=Photo+05', 'https://placehold.co/600x400/A01A7D/FFFFFF?text=Photo+06',
-                'https://placehold.co/600x400/A01A7D/FFFFFF?text=Photo+07', 'https://placehold.co/600x400/A01A7D/FFFFFF?text=Photo+08',
-                'https://placehold.co/600x400/A01A7D/FFFFFF?text=Photo+09', 'https://placehold.co/600x400/A01A7D/FFFFFF?text=Photo+10'
+                'https://kentaosborn.github.io/kentaosborn/images/img14.jpg', 'https://kentaosborn.github.io/kentaosborn/images/img15.jpg', // Testing adaptive sizes
+                
             ],
             'flyers': [
-                'https://kentaosborn.github.io/kentaosborn/images/img1.jpg', 'https://placehold.co/600x400/155F80/FFFFFF?text=Flyers+02',
-                'https://placehold.co/600x400/155F80/FFFFFF?text=Flyers+03', 'https://placehold.co/600x400/155F80/FFFFFF?text=Flyers+04',
-                'https://placehold.co/600x400/155F80/FFFFFF?text=Flyers+05', 'https://placehold.co/600x400/155F80/FFFFFF?text=Flyers+06',
-                'https://placehold.co/600x400/155F80/FFFFFF?text=Flyers+07', 'https://placehold.co/600x400/155F80/FFFFFF?text=Flyers+08',
-                'https://placehold.co/600x400/155F80/FFFFFF?text=Flyers+09', 'https://placehold.co/600x400/155F80/FFFFFF?text=Flyers+10'
+                'https://kentaosborn.github.io/kentaosborn/images/img1.jpg', 
+                'https://kentaosborn.github.io/images/img2.jpg', // 4:5 ratio
+                'https://kentaosborn.github.io/images/img3.jpg', // 4:5 ratio
+                'https://kentaosborn.github.io/images/img4.jpg', // 4:5 ratio
+                'https://kentaosborn.github.io/images/img5.jpg', // 4:5 ratio
+                'https://kentaosborn.github.io/images/img6.jpg', // 4:5 ratio
             ],
             'clothing': [
-                'https://placehold.co/600x400/90B77D/FFFFFF?text=Clothing+01', 'https://placehold.co/600x400/90B77D/FFFFFF?text=Clothing+02',
-                'https://placehold.co/600x400/90B77D/FFFFFF?text=Clothing+03', 'https://placehold.co/600x400/90B77D/FFFFFF?text=Clothing+04',
-                'https://placehold.co/600x400/90B77D/FFFFFF?text=Clothing+05', 'https://placehold.co/600x400/90B77D/FFFFFF?text=Clothing+06',
-                'https://placehold.co/600x400/90B77D/FFFFFF?text=Clothing+07', 'https://placehold.co/600x400/90B77D/FFFFFF?text=Clothing+08',
-                'https://placehold.co/600x400/90B77D/FFFFFF?text=Clothing+09', 'https://placehold.co/600x400/90B77D/FFFFFF?text=Clothing+10'
+                'https://kentaosborn.github.io/kentaosborn/images/img8.jpg', 'https://kentaosborn.github.io/kentaosborn/images/img11.jpg', // Testing adaptive sizes
+                'https://kentaosborn.github.io/kentaosborn/images/img13.jpg',
+            ],
+        };
+
+        // Placeholder URLs (used for Music, Events, Video, Web Design)
+        const linkUrls = {
+            'music': [
+                'https://kentaosborn.com/music/project01', 'https://kentaosborn.com/music/project02', 'https://kentaosborn.com/music/project03', 'https://kentaosborn.com/music/project04', 'https://kentaosborn.com/music/project05',
+                'https://kentaosborn.com/music/project06', 'https://kentaosborn.com/music/project07', 'https://kentaosborn.com/music/project08', 'https://kentaosborn.com/music/project09', 'https://kentaosborn.com/music/project10'
+            ],
+            'events': [
+                'https://kentaosborn.com/events/project01', 'https://kentaosborn.com/events/project02', 'https://kentaosborn.com/events/project03', 'https://kentaosborn.com/events/project04', 'https://kentaosborn.com/events/project05',
+                'https://kentaosborn.com/events/project06', 'https://kentaosborn.com/events/project07', 'https://kentaosborn.com/events/project08', 'https://kentaosborn.com/events/project09', 'https://kentaosborn.com/events/project10'
+            ],
+            'video': [
+                'https://kentaosborn.com/video/project01', 'https://kentaosborn.com/video/project02', 'https://kentaosborn.com/video/project03', 'https://kentaosborn.com/video/project04', 'https://kentaosborn.com/video/project05',
+                'https://kentaosborn.com/video/project06', 'https://kentaosborn.com/video/project07', 'https://kentaosborn.com/video/project08', 'https://kentaosborn.com/video/project09', 'https://kentaosborn.com/video/project10'
             ],
             'web design': [
-                'https://placehold.co/600x400/3A0CA3/FFFFFF?text=Web+Design+01', 'https://placehold.co/600x400/3A0CA3/FFFFFF?text=Web+Design+02',
-                'https://placehold.co/600x400/3A0CA3/FFFFFF?text=Web+Design+03', 'https://placehold.co/600x400/3A0CA3/FFFFFF?text=Web+Design+04',
-                'https://placehold.co/600x400/3A0CA3/FFFFFF?text=Web+Design+05', 'https://placehold.co/600x400/3A0CA3/FFFFFF?text=Web+Design+06',
-                'https://placehold.co/600x400/3A0CA3/FFFFFF?text=Web+Design+07', 'https://placehold.co/600x400/3A0CA3/FFFFFF?text=Web+Design+08',
-                'https://placehold.co/600x400/3A0CA3/FFFFFF?text=Web+Design+09', 'https://placehold.co/600x400/3A0CA3/FFFFFF?text=Web+Design+10'
+                'https://kentaosborn.com/webdesign/project01', 'https://kentaosborn.com/webdesign/project02', 'https://kentaosborn.com/webdesign/project03', 'https://kentaosborn.com/webdesign/project04', 'https://kentaosborn.com/webdesign/project05',
+                'https://kentaosborn.com/webdesign/project06', 'https://kentaosborn.com/webdesign/project07', 'https://kentaosborn.com/webdesign/project08', 'https://kentaosborn.com/webdesign/project09', 'https://kentaosborn.com/webdesign/project10'
             ]
         };
 
@@ -140,34 +150,77 @@
             const imageOverlay = document.getElementById('image-overlay');
             const displayImage = document.getElementById('display-image');
 
-            // Function to generate the HTML for each placeholder
+            // Function to generate the HTML for each item
             const generatePlaceholderHTML = (item) => {
-                let firstRowHtml = '';
-                for (let i = 1; i <= 5; i++) {
-                    const paddedNumber = String(i).padStart(2, '0');
-                    firstRowHtml += `<span class="clickable-number select-none" data-number="${i}">[<span class="number-aligned">${paddedNumber}</span>]</span>`;
-                    if (i < 5) {
-                        firstRowHtml += '&nbsp;&nbsp;';
-                    }
+                const titleLower = item.title.toLowerCase();
+
+                let innerContentHtml = '';
+
+                if (titleLower === 'contact') {
+                    // Custom content for CONTACT section: Instagram and Email links
+                    innerContentHtml = `
+                        <div class="text-md leading-relaxed">
+                            <div class="mb-2">
+                                <a href="https://www.instagram.com/kentaosborn/" target="_blank" class="text-black hover:text-gray-600 transition-colors">INSTAGRAM</a>
+                            </div>
+                            <div class="mb-4">
+                                <a href="mailto:osbornkenta@gmail.com" class="text-black hover:text-gray-600 transition-colors">EMAIL</a>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // Numbered content for image or link categories
+                    const isLinking = linkingCategories.includes(titleLower);
+                    
+                    // Helper function to generate number spans for a range
+                    const generateNumberSpans = (start, end, category) => {
+                        let html = '';
+                        const isImageCategory = !linkingCategories.includes(category);
+                        
+                        for (let i = start; i <= end; i++) {
+                            const paddedNumber = String(i).padStart(2, '0');
+                            let attribute = `data-category="${category}"`; // Add category attribute
+                            
+                            // Determine if we need a link URL or an image URL
+                            if (isImageCategory) {
+                                const url = placeholderImages[category] ? placeholderImages[category][i - 1] : '';
+                                attribute += ` data-url="${url}" data-is-image="true"`;
+                            } else {
+                                const url = linkUrls[category] ? linkUrls[category][i - 1] : '#';
+                                attribute += ` data-link-url="${url}" data-is-image="false"`;
+                            }
+                            
+                            html += `<span class="clickable-number select-none" data-number="${i}" ${attribute}>[<span class="number-aligned">${paddedNumber}</span>]</span>`;
+                            if (i < end) {
+                                html += '&nbsp;&nbsp;';
+                            }
+                        }
+                        return html;
+                    };
+
+                    const row1Html = generateNumberSpans(1, 5, titleLower);
+                    const row2Html = generateNumberSpans(6, 10, titleLower);
+
+                    innerContentHtml = `
+                        <div class="text-md mb-1">
+                            <div class="mb-2">${row1Html}</div>
+                            <div class="mb-4">${row2Html}</div>
+                        </div>
+                    `;
                 }
 
-                let secondRowHtml = '';
-                for (let i = 6; i <= 10; i++) {
-                    const paddedNumber = String(i).padStart(2, '0');
-                    secondRowHtml += `<span class="clickable-number select-none" data-number="${i}">[<span class="number-aligned">${paddedNumber}</span>]</span>`;
-                    if (i < 10) {
-                        secondRowHtml += '&nbsp;&nbsp;';
-                    }
-                }
 
                 return `
-                    <div class="mb-1">
-                        <h2 class="text-md font-normal interactive-title">${item.title}</h2>
-                        <div class="pt-2 leading-relaxed">
-                            <div class="text-md pl-8">
-                                <div class="mb-2">${firstRowHtml}</div>
-                                <div class="mb-4">${secondRowHtml}</div>
-                            </div>
+                    <div class="mb-4">
+                        <!-- Clickable Header: Flex layout to include the arrow icon -->
+                        <div class="interactive-header flex justify-between items-center cursor-pointer transition-colors hover:text-gray-600">
+                            <h2 class="text-md font-normal interactive-title">${item.title.toUpperCase()}</h2>
+                            <span class="dropdown-icon text-xs transition-transform">▶</span>
+                        </div>
+
+                        <!-- Collapsible Content: Hidden by default -->
+                        <div class="dropdown-content hidden leading-relaxed pt-2 pl-4">
+                            ${innerContentHtml}
                         </div>
                     </div>
                 `;
@@ -177,44 +230,104 @@
             const allContentHTML = contentData.map(generatePlaceholderHTML).join('');
             container.innerHTML = allContentHTML;
 
-            // Event listener for hovering over numbers
-            container.addEventListener('mouseover', (event) => {
-                const numberElement = event.target.closest('.clickable-number');
-                if (numberElement) {
-                    const number = parseInt(numberElement.dataset.number, 10);
-                    const placeholderContainer = numberElement.closest('.mb-1');
-                    const placeholderTitle = placeholderContainer.querySelector('.interactive-title').textContent;
-                    
-                    const imageUrls = placeholderImages[placeholderTitle];
-                    
-                    if (imageUrls && number >= 1 && number <= 10) {
-                        let targetElement = numberElement;
-                        // If the number is in the second row, find the corresponding number in the first row within the same parent container
-                        if (number > 5) {
-                            const correspondingNumber = number - 5;
-                            targetElement = placeholderContainer.querySelector(`.clickable-number[data-number="${correspondingNumber}"]`);
-                        }
+            // 1. Dropdown Toggle Logic
+            container.addEventListener('click', (event) => {
+                const headerElement = event.target.closest('.interactive-header');
+                if (headerElement) {
+                    const content = headerElement.nextElementSibling;
+                    const icon = headerElement.querySelector('.dropdown-icon');
+
+                    // Toggle visibility of the content area
+                    content.classList.toggle('hidden');
+
+                    // Toggle icon direction
+                    if (content.classList.contains('hidden')) {
+                        icon.textContent = '▶'; // Right triangle when collapsed
                         
-                        // Get the position of the target element
-                        const rect = targetElement.getBoundingClientRect();
+                        // Hide image if the dropdown is closed
+                        if (imageOverlay.classList.contains('active')) {
+                            imageOverlay.classList.remove('active');
+                            displayImage.src = ''; 
+                            // Reset any specific styles when closing
+                            displayImage.style.aspectRatio = '';
+                        }
 
-                        // Position the image overlay based on the target's top position
-                        imageOverlay.style.top = `${rect.top}px`;
-
-                        // Set image source and make it visible
-                        displayImage.src = imageUrls[number - 1];
-                        imageOverlay.classList.add('active');
+                    } else {
+                        icon.textContent = '▼'; // Down triangle when expanded
                     }
                 }
             });
 
-            // Event listener for leaving the numbers area
-            container.addEventListener('mouseout', (event) => {
+
+            // 2. Click Logic: Handles both links and image display
+            container.addEventListener('click', (event) => {
                 const numberElement = event.target.closest('.clickable-number');
+                
+                // Only proceed if a numbered element is clicked
                 if (numberElement) {
+                    const linkUrl = numberElement.dataset.linkUrl;
+                    const newImageUrl = numberElement.dataset.url;
+                    const category = numberElement.dataset.category;
+
+                    if (linkUrl) {
+                        // --- LINK LOGIC ---
+                        console.log(`Opening external link: ${linkUrl}`);
+                        window.open(linkUrl, '_blank');
+                        
+                        // Hide image overlay if visible
+                        imageOverlay.classList.remove('active');
+                        displayImage.src = '';
+                        displayImage.style.aspectRatio = ''; // Reset aspect ratio
+                        return;
+                    }
+
+                    // --- IMAGE LOGIC (Only runs if linkUrl is NOT present) ---
+                    if (!newImageUrl) {
+                        console.error("Missing image URL for the clicked element.");
+                        return;
+                    }
+
+                    // Reset aspect ratio first
+                    displayImage.style.aspectRatio = '';
+
+                    // Apply specific aspect ratio for Flyers (1080:1350 is 4:5)
+                    // The CSS handles the 1500px max size globally, but this overrides 
+                    // the ratio for the 'flyers' category.
+                    if (category === 'flyers') {
+                        displayImage.style.aspectRatio = '4 / 5';
+                    }
+
+                    // Get bounding rect for positioning
+                    const rect = numberElement.getBoundingClientRect();
+
+                    const isActive = imageOverlay.classList.contains('active');
+                    const isSameImage = displayImage.src === newImageUrl;
+
+                    if (isActive && isSameImage) {
+                        // If same number is clicked, hide the image
+                        imageOverlay.classList.remove('active');
+                        // Clear the source after hiding to prevent flickering when next image loads
+                        displayImage.src = ''; 
+                        displayImage.style.aspectRatio = ''; // Ensure style is reset when hidden
+                    } else {
+                        // If a different number is clicked, or it's currently hidden, show the new image
+                        // Position the image overlay relative to the viewport
+                        imageOverlay.style.top = `${rect.top}px`;
+                        
+                        // Set image source and make it visible
+                        displayImage.src = newImageUrl;
+                        imageOverlay.classList.add('active');
+                    }
+                } 
+                // We keep this check to hide the image if the user clicks anywhere else in the content area 
+                // that is not a numbered link/image element.
+                else if (event.target.closest('#content-container')) {
                     imageOverlay.classList.remove('active');
+                    displayImage.src = '';
+                    displayImage.style.aspectRatio = '';
                 }
             });
+            
         });
     </script>
 
