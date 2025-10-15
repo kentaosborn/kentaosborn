@@ -73,11 +73,10 @@
         Clothing
         <br>
         <!-- CRITICAL CHANGE: data-src now holds the FULL URL -->
-        <span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img8.jpg
-" data-caption="Description for Clothing item 1">[1]</span>
+        <span class="img-trigger photo-trigger" data-src="https://www.kentaosborn.github.com/kentaosborn/images/img8.jpg" data-caption="Description for Clothing item 1">[1]</span>
         <br>
         <!-- CRITICAL CHANGE: data-src now holds the FULL URL -->
-        <span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img11.jpg" data-caption="Description for Clothing item 2">[2]</span>
+        <span class="img-trigger photo-trigger" data-src="https://www.kentaosborn.github.com/kentaosborn/images/img11.jpg" data-caption="Description for Clothing item 2">[2]</span>
         <br>
         <!-- ADDED MODELLING SECTION -->
         Modelling
@@ -88,10 +87,10 @@
         Photo
         <br>
         <!-- CRITICAL CHANGE: data-src now holds the FULL URL -->
-        <span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img14.jpg" data-caption="Description of the Photo 1 item">[1]</span>
+        <span class="img-trigger photo-trigger" data-src="https://www.kentaosborn.github.com/kentaosborn/images/img14.jpg" data-caption="Description of the Photo 1 item">[1]</span>
         <br>
         <!-- CRITICAL CHANGE: data-src now holds the FULL URL -->
-        <span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img15.jpg" data-caption="Description of the Photo 2 item">[2]</span>
+        <span class="img-trigger photo-trigger" data-src="https://www.kentaosborn.github.com/kentaosborn/images/img15.jpg" data-caption="Description of the Photo 2 item">[2]</span>
         <br>
         Video
         <br>
@@ -121,37 +120,14 @@
     </div>
 
     <script>
-        // NOTE: PHOTO_BASE_PATH has been removed entirely.
-        
-        // Placeholder for failed loads to confirm functionality
-        const FALLBACK_IMAGE_URL = "https://placehold.co/250x200/ff0000/ffffff?text=Image+Load+Failed";
-        
         document.addEventListener('DOMContentLoaded', () => {
             const triggers = document.querySelectorAll('.img-trigger');
             const imageCaptionContainer = document.getElementById('image-and-caption-container');
             const hoverImage = document.getElementById('hover-image-display');
             const hoverCaption = document.getElementById('hover-caption-display');
             
-            // --- Preload Logic (Simplified for direct links) ---
-            // Preloading is still helpful for faster display
-            triggers.forEach(trigger => {
-                const url = trigger.getAttribute('data-src');
-                if (url) {
-                    const img = new Image();
-                    img.src = url;
-                }
-            });
-            // --- End Preload Logic ---
-
-            // Add error handler: if an image fails to load, use the fallback
-            hoverImage.onerror = function() {
-                // Only show fallback if the image container is currently visible
-                if (imageCaptionContainer.style.display === 'block' && this.src !== FALLBACK_IMAGE_URL) {
-                    console.error("Image failed to load. Using fallback.");
-                    this.src = FALLBACK_IMAGE_URL;
-                    this.onerror = null; // Prevent infinite loop if fallback fails
-                }
-            };
+            // --- Removed Preload Logic ---
+            // --- Removed Error Handling Logic (onerror) and FALLBACK_IMAGE_URL ---
             
             triggers.forEach(trigger => {
                 
@@ -161,16 +137,7 @@
                     const captionText = trigger.getAttribute('data-caption') || '';
                     
                     if (finalUrl) {
-                        // Reset onerror handler for the new image attempt
-                        hoverImage.onerror = function() {
-                            if (imageCaptionContainer.style.display === 'block' && this.src !== FALLBACK_IMAGE_URL) {
-                                console.error(`Image ${finalUrl} failed to load. Using fallback.`);
-                                this.src = FALLBACK_IMAGE_URL;
-                                this.onerror = null; // Clear handler after fallback
-                            }
-                        };
-                        
-                        // 1. Update the image source (triggers the load attempt)
+                        // 1. Update the image source
                         hoverImage.src = finalUrl;
                         // 2. Prepend the asterisk to the caption text
                         hoverCaption.textContent = '* ' + captionText; 
@@ -182,9 +149,8 @@
                 trigger.addEventListener('mouseout', () => {
                     // Hide the entire container instantly
                     imageCaptionContainer.style.display = 'none';
-                    // Clear the source and reset handler when hiding to prepare for next hover
+                    // Clear the source when hiding to prepare for next hover
                     hoverImage.src = '';
-                    hoverImage.onerror = null; // Clear handler
                 });
             });
         });
