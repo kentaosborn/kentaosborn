@@ -25,21 +25,21 @@
         }
 
         /*
+        DESKTOP STYLING (Default)
         Container for the image and caption. Uses FIXED positioning and is centered vertically
-        on the RIGHT side of the screen. Z-INDEX: -1 keeps it behind all text.
+        on the RIGHT side of the screen. 
         */
         #image-and-caption-container {
             position: fixed; 
             right: 100px; /* Adjusted to 100px from the right edge */
             top: 50%; /* Position 50% down from the top */
             transform: translateY(-50%); /* Shift up by half its height to perfectly center it */
-            width: 375px; /* DEFAULT SIZE INCREASED: 250px * 1.5 = 375px */
+            width: 375px; /* DEFAULT SIZE: 1.5x vertical photos */
             display: none;
             z-index: -1; /* Pushes the entire container to the very back layer */
         }
         
-        /* New class for horizontal images (double the original 250px width, now 500px) */
-        /* If you wanted 1.5x of the new default (375px * 1.5 = 562.5px), you would change this to 562.5px */
+        /* DESKTOP: New class for horizontal images (double width) */
         #image-and-caption-container.horizontal-display {
             width: 500px; 
         }
@@ -67,6 +67,37 @@
         .img-trigger {
             cursor: pointer;
             color: inherit;
+        }
+
+        /* MEDIA QUERY: Adjust layout for mobile and small screens 
+        ------------------------------------------------------
+        */
+        @media (max-width: 768px) {
+            /* Reposition and resize the image container */
+            #image-and-caption-container {
+                position: fixed; 
+                top: 50%; 
+                left: 50%; /* Center horizontally */
+                right: auto; /* Reset right anchor */
+                /* Move up by 50% of its height and left by 50% of its width to perfectly center it */
+                transform: translate(-50%, -50%); 
+                
+                /* Set fluid width for vertical/default images */
+                width: 70vw; /* 70% of viewport width */
+                max-width: 375px; /* Ensure it doesn't get wider than the desktop size */
+                z-index: 10; /* Bring image above text on mobile */
+                
+                /* Optional: Style adjustments for mobile popup */
+                background-color: white; 
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                padding: 10px;
+            }
+
+            /* Handle the horizontal images (make them slightly wider, occupying most of the screen) */
+            #image-and-caption-container.horizontal-display {
+                width: 90vw; /* Wider for horizontal images */
+                max-width: 500px; /* Ensure it doesn't get wider than the desktop size */
+            }
         }
     </style>
 </head>
@@ -142,10 +173,10 @@
                     if (finalUrl) {
                         // 1. DYNAMICALLY ADJUST SIZE
                         if (isHorizontal) {
-                            // If horizontal, set to the explicit horizontal width (500px)
+                            // If horizontal, set to the explicit horizontal width (500px on desktop, 90vw on mobile)
                             imageCaptionContainer.classList.add('horizontal-display');
                         } else {
-                            // If not horizontal, use the default size (375px)
+                            // If not horizontal, use the default size (375px on desktop, 70vw on mobile)
                             imageCaptionContainer.classList.remove('horizontal-display');
                         }
                         
