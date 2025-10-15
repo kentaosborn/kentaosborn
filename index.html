@@ -72,11 +72,11 @@
         <!-- MOVED CLOTHING TO THE TOP -->
         Clothing
         <br>
-        <!-- Added data-caption for clothing -->
-        <span class="img-trigger placeholder-trigger" data-placeholder="img8.jpg" data-caption="Placeholder text for Clothing item 1">[1]</span>
+        <!-- UPDATED: Changed to photo-trigger and data-src for real image files -->
+        <span class="img-trigger photo-trigger" data-src="img8.jpg" data-caption="Description for Clothing item 1">[1]</span>
         <br>
-        <!-- Added data-caption for clothing -->
-        <span class="img-trigger placeholder-trigger" data-placeholder="img11.jpg" data-caption="Placeholder text for Clothing item 2 (horizontal)">[2]</span>
+        <!-- UPDATED: Changed to photo-trigger and data-src for real image files -->
+        <span class="img-trigger photo-trigger" data-src="img9.jpg" data-caption="Description for Clothing item 2">[2]</span>
         <br>
         <!-- ADDED MODELLING SECTION -->
         Modelling
@@ -114,19 +114,17 @@
 
     <!-- The container holds the image and the caption -->
     <div id="image-and-caption-container">
-        <img id="hover-image-display" src="" alt="Hover Preview">
+        <!-- Added a very basic alt text for accessibility -->
+        <img id="hover-image-display" src="" alt="Item Preview">
         <div id="hover-caption-display"></div>
     </div>
 
     <script>
         // Define the base URL for the hosted photo files
         const PHOTO_BASE_PATH = "https://kentaosborn.github.com/kentaosborn/images/";
+        // Placeholder for failed loads to confirm functionality
+        const FALLBACK_IMAGE_URL = "https://placehold.co/250x200/ff0000/ffffff?text=Image+Not+Found";
 
-        // Define configurations for placeholder images (Clothing items)
-        const PLACEHOLDER_CONFIG = {
-            'cloth1': { size: '250x350', color: '6c757d', text: 'Cloth 1 (Vertical)' },
-            'cloth2': { size: '250x180', color: '343a40', text: 'Cloth 2 (Horizontal)' }
-        };
 
         document.addEventListener('DOMContentLoaded', () => {
             const triggers = document.querySelectorAll('.img-trigger');
@@ -134,30 +132,39 @@
             const hoverImage = document.getElementById('hover-image-display');
             const hoverCaption = document.getElementById('hover-caption-display');
 
+            // Add error handler: if an image fails to load, use the fallback
+            hoverImage.onerror = function() {
+                // Only show fallback if the image container is currently visible
+                if (imageCaptionContainer.style.display === 'block') {
+                    console.error("Image failed to load. Using fallback.");
+                    this.src = FALLBACK_IMAGE_URL;
+                    this.onerror = null; // Prevent infinite loop if fallback fails
+                }
+            };
+            
             triggers.forEach(trigger => {
                 
                 trigger.addEventListener('mouseover', () => {
                     let finalUrl = '';
-                    // Get the caption text
                     const captionText = trigger.getAttribute('data-caption') || '';
 
                     // Logic to construct the final image URL
                     if (trigger.classList.contains('photo-trigger')) {
-                        // CHANGED from 'data-filename' to 'data-src'
                         const srcName = trigger.getAttribute('data-src');
                         finalUrl = PHOTO_BASE_PATH + srcName;
                     } 
-                    else if (trigger.classList.contains('placeholder-trigger')) {
-                        const identifier = trigger.getAttribute('data-placeholder');
-                        const config = PLACEHOLDER_CONFIG[identifier];
-                        
-                        if (config) {
-                            finalUrl = `https://placehold.co/${config.size}/${config.color}/ffffff?text=${encodeURIComponent(config.text)}`;
-                        }
-                    }
-
+                    
                     if (finalUrl) {
-                        // 1. Update the image source
+                        // Reset onerror handler for the new image attempt
+                        hoverImage.onerror = function() {
+                            if (imageCaptionContainer.style.display === 'block') {
+                                console.error(`Image ${finalUrl} failed to load. Using fallback.`);
+                                this.src = FALLBACK_IMAGE_URL;
+                                this.onerror = null; // Clear handler after fallback
+                            }
+                        };
+                        
+                        // 1. Update the image source (triggers the load attempt)
                         hoverImage.src = finalUrl;
                         // 2. Prepend the asterisk to the caption text
                         hoverCaption.textContent = '* ' + captionText; 
@@ -169,6 +176,9 @@
                 trigger.addEventListener('mouseout', () => {
                     // Hide the entire container instantly
                     imageCaptionContainer.style.display = 'none';
+                    // Clear the source and reset handler when hiding to prepare for next hover
+                    hoverImage.src = '';
+                    hoverImage.onerror = null;
                 });
             });
         });
