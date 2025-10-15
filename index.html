@@ -25,23 +25,49 @@
         }
 
         /*
-        DESKTOP STYLING (Default)
-        Container for the image and caption. Uses FIXED positioning and is centered vertically
-        on the RIGHT side of the screen. 
+        DESKTOP STYLING (Default for large screens)
+        Container for the image and caption. Fixed to the right edge.
         */
         #image-and-caption-container {
             position: fixed; 
             right: 100px; /* Adjusted to 100px from the right edge */
             top: 50%; /* Position 50% down from the top */
-            transform: translateY(-50%); /* Shift up by half its height to perfectly center it */
+            transform: translateY(-50%); /* Shift up by half its height to perfectly center it vertically */
             width: 375px; /* DEFAULT SIZE: 1.5x vertical photos */
             display: none;
-            z-index: -1; /* Pushes the entire container to the very back layer */
+            z-index: -1; /* Pushes the entire container to the very back layer, behind text */
         }
         
-        /* DESKTOP: New class for horizontal images (double width) */
+        /* Universal class for horizontal images (double width) */
         #image-and-caption-container.horizontal-display {
             width: 500px; 
+        }
+
+        /* NEW: MEDIA QUERY FOR MOBILE FIX
+        ------------------------------------------------------
+        Overrides fixed desktop positioning to ensure image is centered and fluid on small screens.
+        */
+        @media (max-width: 768px) {
+            #image-and-caption-container {
+                right: auto; /* REMOVES the fixed right anchor */
+                left: 50%; /* Centers horizontally */
+                /* Replaces the old transform to center on both X and Y axis */
+                transform: translate(-50%, -50%); 
+                
+                width: 70vw; /* Fluid width for vertical/default images */
+                max-width: 375px; /* Keeps the size reasonable */
+                z-index: -1; /* Explicitly ensure it stays behind the text */
+
+                /* Ensure no bubble styles are accidentally introduced */
+                background-color: transparent; 
+                box-shadow: none;
+                padding: 0;
+            }
+
+            #image-and-caption-container.horizontal-display {
+                width: 90vw; /* Wider fluid width for horizontal images */
+                max-width: 500px;
+            }
         }
 
         /* Styling for the image */
@@ -67,37 +93,6 @@
         .img-trigger {
             cursor: pointer;
             color: inherit;
-        }
-
-        /* MEDIA QUERY: Adjust layout for mobile and small screens 
-        ------------------------------------------------------
-        */
-        @media (max-width: 768px) {
-            /* Reposition and resize the image container */
-            #image-and-caption-container {
-                position: fixed; 
-                top: 50%; 
-                left: 50%; /* Center horizontally */
-                right: auto; /* Reset right anchor */
-                /* Move up by 50% of its height and left by 50% of its width to perfectly center it */
-                transform: translate(-50%, -50%); 
-                
-                /* Set fluid width for vertical/default images */
-                width: 70vw; /* 70% of viewport width */
-                max-width: 375px; /* Ensure it doesn't get wider than the desktop size */
-                z-index: 10; /* Bring image above text on mobile */
-                
-                /* Optional: Style adjustments for mobile popup */
-                background-color: white; 
-                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-                padding: 10px;
-            }
-
-            /* Handle the horizontal images (make them slightly wider, occupying most of the screen) */
-            #image-and-caption-container.horizontal-display {
-                width: 90vw; /* Wider for horizontal images */
-                max-width: 500px; /* Ensure it doesn't get wider than the desktop size */
-            }
         }
     </style>
 </head>
@@ -163,41 +158,84 @@
             const hoverImage = document.getElementById('hover-image-display');
             const hoverCaption = document.getElementById('hover-caption-display');
             
-            triggers.forEach(trigger => {
-                
-                trigger.addEventListener('mouseover', () => {
-                    const finalUrl = trigger.getAttribute('data-src');
-                    const captionText = trigger.getAttribute('data-caption') || '';
-                    const isHorizontal = trigger.getAttribute('data-orientation') === 'horizontal'; // NEW CHECK
-                    
-                    if (finalUrl) {
-                        // 1. DYNAMICALLY ADJUST SIZE
-                        if (isHorizontal) {
-                            // If horizontal, set to the explicit horizontal width (500px on desktop, 90vw on mobile)
-                            imageCaptionContainer.classList.add('horizontal-display');
-                        } else {
-                            // If not horizontal, use the default size (375px on desktop, 70vw on mobile)
-                            imageCaptionContainer.classList.remove('horizontal-display');
-                        }
-                        
-                        // 2. Update the image source
-                        hoverImage.src = finalUrl;
-                        // 3. Prepend the asterisk to the caption text
-                        hoverCaption.textContent = '* ' + captionText; 
-                        // 4. Display the entire container (image + caption)
-                        imageCaptionContainer.style.display = 'block';
-                    }
-                });
+            let hideTimeout; 
+            
+            // Function to show the image on both mouseover and touchstart
+            const showImage = (e, trigger) => {
+                // Clear the hide timeout immediately
+                clearTimeout(hideTimeout);
 
-                trigger.addEventListener('mouseout', () => {
+                const finalUrl = trigger.getAttribute('data-src');
+                const captionText = trigger.getAttribute('data-caption') || '';
+                const isHorizontal = trigger.getAttribute('data-orientation') === 'horizontal'; 
+                
+                if (finalUrl) {
+                    // 1. DYNAMICALLY ADJUST SIZE
+                    if (isHorizontal) {
+                        imageCaptionContainer.classList.add('horizontal-display');
+                    } else {
+                        imageCaptionContainer.classList.remove('horizontal-display');
+                    }
+                    
+                    // 2. Update the image source
+                    hoverImage.src = finalUrl;
+                    // 3. Prepend the asterisk to the caption text
+                    hoverCaption.textContent = '* ' + captionText; 
+                    // 4. Display the entire container (image + caption)
+                    imageCaptionContainer.style.display = 'block';
+                }
+            };
+
+            // Function to hide the image on both mouseout and touch-end/click-outside
+            const hideImage = () => {
+                 // Start the hide timeout
+                hideTimeout = setTimeout(() => {
                     // Hide the entire container instantly
                     imageCaptionContainer.style.display = 'none';
                     // Remove the class to reset the container size for the next hover
                     imageCaptionContainer.classList.remove('horizontal-display'); 
                     // Clear the source when hiding to prepare for next hover
                     hoverImage.src = '';
+                }, 200); // 200ms delay for desktop jitter
+            }
+            
+            triggers.forEach(trigger => {
+                // Desktop/Mouse events (existing logic)
+                trigger.addEventListener('mouseover', (e) => showImage(e, trigger));
+                trigger.addEventListener('mouseout', hideImage);
+                
+                // MOBILE/Touch events (NEW)
+                trigger.addEventListener('touchstart', (e) => {
+                    e.preventDefault(); // CRITICAL: Stop the touch from acting like a click
+                    
+                    // Before showing the new image, we need to hide any currently visible one
+                    if (imageCaptionContainer.style.display === 'block') {
+                        // If an image is already showing (from a previous tap), hide it first
+                        // before showing the new one, simulating a toggle/dismiss.
+                        hideImage();
+                        // Then proceed to show the new one
+                        // We use a slight delay to ensure the hide action completes visually
+                        setTimeout(() => showImage(e, trigger), 50); 
+                    } else {
+                        // Otherwise, just show the image
+                         showImage(e, trigger);
+                    }
                 });
             });
+
+            // GLOBAL CLICK LISTENER (NEW): Hides the image when user taps anywhere else on mobile
+            document.addEventListener('click', (e) => {
+                // Check if the click/tap target is *not* a trigger and *not* the image container itself
+                if (!e.target.closest('.img-trigger') && !e.target.closest('#image-and-caption-container')) {
+                     // Only hide if we are currently showing an image
+                     if (imageCaptionContainer.style.display === 'block') {
+                         hideImage();
+                     }
+                }
+            });
+            
+            // Since touchstart has preventDefault, we need a way to dismiss the image, 
+            // the global click listener handles this by tapping outside the image.
         });
     </script>
 </body>
