@@ -33,11 +33,16 @@
             right: 100px; /* Adjusted to 100px from the right edge */
             top: 50%; /* Position 50% down from the top */
             transform: translateY(-50%); /* Shift up by half its height to perfectly center it */
-            width: 250px; /* Set a fixed width for the entire hover area */
+            width: 250px; /* Default width for vertical/portrait images */
             display: none;
             z-index: -1; /* Pushes the entire container to the very back layer */
         }
         
+        /* New class for horizontal images (double the width) */
+        #image-and-caption-container.horizontal-display {
+            width: 500px; 
+        }
+
         /* Styling for the image */
         #hover-image-display {
             width: 100%; /* Take up the full width of the parent container */
@@ -72,11 +77,11 @@
         <!-- MOVED CLOTHING TO THE TOP -->
         Clothing
         <br>
-        <!-- CRITICAL CHANGE: data-src now holds the FULL URL -->
-        <span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img8.jpg" data-caption="Description for Clothing item 1">[1]</span>
+        <!-- Vertical image - uses default size -->
+        <span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img8.jpg" data-caption="T-shirt graphic for Donny Thrash (formerly Rex Spit)">[1]</span>
         <br>
-        <!-- CRITICAL CHANGE: data-src now holds the FULL URL -->
-        <span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img11.jpg" data-caption="Description for Clothing item 2">[2]</span>
+        <!-- Horizontal image - gets double size due to data-orientation="horizontal" -->
+        <span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img11.jpg" data-caption="Hoodie graphic for Homixide Beno's brother" data-orientation="horizontal">[2]</span>
         <br>
         <!-- ADDED MODELLING SECTION -->
         Modelling
@@ -86,11 +91,11 @@
         <br>
         Photo
         <br>
-        <!-- CRITICAL CHANGE: data-src now holds the FULL URL -->
-        <span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img14.jpg" data-caption="Description of the Photo 1 item">[1]</span>
+        <!-- Vertical image - uses default size -->
+        <span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img14.jpg" data-caption="For Guarded Jeans">[1]</span>
         <br>
-        <!-- CRITICAL CHANGE: data-src now holds the FULL URL -->
-        <span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img15.jpg" data-caption="Description of the Photo 2 item">[2]</span>
+        <!-- Horizontal image - gets double size due to data-orientation="horizontal" -->
+        <span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img15.jpg" data-caption="For Swannclayre Loose Ends button shirt" data-orientation="horizontal">[2]</span>
         <br>
         Video
         <br>
@@ -126,22 +131,26 @@
             const hoverImage = document.getElementById('hover-image-display');
             const hoverCaption = document.getElementById('hover-caption-display');
             
-            // --- Removed Preload Logic ---
-            // --- Removed Error Handling Logic (onerror) and FALLBACK_IMAGE_URL ---
-            
             triggers.forEach(trigger => {
                 
                 trigger.addEventListener('mouseover', () => {
-                    // CRITICAL CHANGE: finalUrl is now just the data-src attribute value
                     const finalUrl = trigger.getAttribute('data-src');
                     const captionText = trigger.getAttribute('data-caption') || '';
+                    const isHorizontal = trigger.getAttribute('data-orientation') === 'horizontal'; // NEW CHECK
                     
                     if (finalUrl) {
-                        // 1. Update the image source
+                        // 1. DYNAMICALLY ADJUST SIZE
+                        if (isHorizontal) {
+                            imageCaptionContainer.classList.add('horizontal-display');
+                        } else {
+                            imageCaptionContainer.classList.remove('horizontal-display');
+                        }
+                        
+                        // 2. Update the image source
                         hoverImage.src = finalUrl;
-                        // 2. Prepend the asterisk to the caption text
+                        // 3. Prepend the asterisk to the caption text
                         hoverCaption.textContent = '* ' + captionText; 
-                        // 3. Display the entire container (image + caption)
+                        // 4. Display the entire container (image + caption)
                         imageCaptionContainer.style.display = 'block';
                     }
                 });
@@ -149,6 +158,8 @@
                 trigger.addEventListener('mouseout', () => {
                     // Hide the entire container instantly
                     imageCaptionContainer.style.display = 'none';
+                    // Remove the class to reset the container size for the next hover
+                    imageCaptionContainer.classList.remove('horizontal-display'); 
                     // Clear the source when hiding to prepare for next hover
                     hoverImage.src = '';
                 });
