@@ -72,11 +72,12 @@
         <!-- MOVED CLOTHING TO THE TOP -->
         Clothing
         <br>
-        <!-- UPDATED: Changed to photo-trigger and data-src for real image files -->
-        <span class="img-trigger photo-trigger" data-src="img8.jpg" data-caption="Description for Clothing item 1">[1]</span>
+        <!-- CRITICAL CHANGE: data-src now holds the FULL URL -->
+        <span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img8.jpg
+" data-caption="Description for Clothing item 1">[1]</span>
         <br>
-        <!-- UPDATED: Changed to photo-trigger and data-src for real image files -->
-        <span class="img-trigger photo-trigger" data-src="img9.jpg" data-caption="Description for Clothing item 2">[2]</span>
+        <!-- CRITICAL CHANGE: data-src now holds the FULL URL -->
+        <span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img11.jpg" data-caption="Description for Clothing item 2">[2]</span>
         <br>
         <!-- ADDED MODELLING SECTION -->
         Modelling
@@ -86,11 +87,11 @@
         <br>
         Photo
         <br>
-        <!-- RENAMED attribute to data-src -->
-        <span class="img-trigger photo-trigger" data-src="img14.jpg" data-caption="Description of the Photo 1 item">[1]</span>
+        <!-- CRITICAL CHANGE: data-src now holds the FULL URL -->
+        <span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img14.jpg" data-caption="Description of the Photo 1 item">[1]</span>
         <br>
-        <!-- RENAMED attribute to data-src -->
-        <span class="img-trigger photo-trigger" data-src="img15.jpg" data-caption="Description of the Photo 2 item">[2]</span>
+        <!-- CRITICAL CHANGE: data-src now holds the FULL URL -->
+        <span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img15.jpg" data-caption="Description of the Photo 2 item">[2]</span>
         <br>
         Video
         <br>
@@ -120,22 +121,32 @@
     </div>
 
     <script>
-        // Define the base URL for the hosted photo files
-        const PHOTO_BASE_PATH = "https://kentaosborn.github.com/kentaosborn/images/";
+        // NOTE: PHOTO_BASE_PATH has been removed entirely.
+        
         // Placeholder for failed loads to confirm functionality
-        const FALLBACK_IMAGE_URL = "https://placehold.co/250x200/ff0000/ffffff?text=Image+Not+Found";
-
-
+        const FALLBACK_IMAGE_URL = "https://placehold.co/250x200/ff0000/ffffff?text=Image+Load+Failed";
+        
         document.addEventListener('DOMContentLoaded', () => {
             const triggers = document.querySelectorAll('.img-trigger');
             const imageCaptionContainer = document.getElementById('image-and-caption-container');
             const hoverImage = document.getElementById('hover-image-display');
             const hoverCaption = document.getElementById('hover-caption-display');
+            
+            // --- Preload Logic (Simplified for direct links) ---
+            // Preloading is still helpful for faster display
+            triggers.forEach(trigger => {
+                const url = trigger.getAttribute('data-src');
+                if (url) {
+                    const img = new Image();
+                    img.src = url;
+                }
+            });
+            // --- End Preload Logic ---
 
             // Add error handler: if an image fails to load, use the fallback
             hoverImage.onerror = function() {
                 // Only show fallback if the image container is currently visible
-                if (imageCaptionContainer.style.display === 'block') {
+                if (imageCaptionContainer.style.display === 'block' && this.src !== FALLBACK_IMAGE_URL) {
                     console.error("Image failed to load. Using fallback.");
                     this.src = FALLBACK_IMAGE_URL;
                     this.onerror = null; // Prevent infinite loop if fallback fails
@@ -145,19 +156,14 @@
             triggers.forEach(trigger => {
                 
                 trigger.addEventListener('mouseover', () => {
-                    let finalUrl = '';
+                    // CRITICAL CHANGE: finalUrl is now just the data-src attribute value
+                    const finalUrl = trigger.getAttribute('data-src');
                     const captionText = trigger.getAttribute('data-caption') || '';
-
-                    // Logic to construct the final image URL
-                    if (trigger.classList.contains('photo-trigger')) {
-                        const srcName = trigger.getAttribute('data-src');
-                        finalUrl = PHOTO_BASE_PATH + srcName;
-                    } 
                     
                     if (finalUrl) {
                         // Reset onerror handler for the new image attempt
                         hoverImage.onerror = function() {
-                            if (imageCaptionContainer.style.display === 'block') {
+                            if (imageCaptionContainer.style.display === 'block' && this.src !== FALLBACK_IMAGE_URL) {
                                 console.error(`Image ${finalUrl} failed to load. Using fallback.`);
                                 this.src = FALLBACK_IMAGE_URL;
                                 this.onerror = null; // Clear handler after fallback
@@ -178,7 +184,7 @@
                     imageCaptionContainer.style.display = 'none';
                     // Clear the source and reset handler when hiding to prepare for next hover
                     hoverImage.src = '';
-                    hoverImage.onerror = null;
+                    hoverImage.onerror = null; // Clear handler
                 });
             });
         });
