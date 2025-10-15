@@ -7,28 +7,56 @@
     <!-- Basic CSS for the image and trigger elements -->
     <style>
         body {
-            font-family: sans-serif;
-            padding: 20px;
+            /* Changed font to Courier and reduced size */
+            font-family: 'Courier New', Courier, monospace; 
+            font-size: small;
+            /* Padding removed to allow content to align with the extreme left edge */
+            padding: 0; 
+            /* Added negative letter-spacing to make the gap between letters smaller */
+            letter-spacing: -0.05em; 
+        }
+
+        /* Container to limit text width to approx. half the page. */
+        #content-container {
+            max-width: 500px; /* Limits the width of the text column */
+            /* Added back a small left padding so text doesn't touch the very edge */
+            padding-left: 20px;
+            padding-top: 20px;
         }
 
         /*
-        The hidden image element now uses FIXED positioning and is centered vertically
+        Container for the image and caption. Uses FIXED positioning and is centered vertically
         on the RIGHT side of the screen. Z-INDEX: -1 keeps it behind all text.
         */
-        #hover-image-display {
+        #image-and-caption-container {
             position: fixed; 
             right: 100px; /* Adjusted to 100px from the right edge */
             top: 50%; /* Position 50% down from the top */
             transform: translateY(-50%); /* Shift up by half its height to perfectly center it */
-            width: 250px;
-            height: auto;
+            width: 250px; /* Set a fixed width for the entire hover area */
             display: none;
+            z-index: -1; /* Pushes the entire container to the very back layer */
+        }
+        
+        /* Styling for the image */
+        #hover-image-display {
+            width: 100%; /* Take up the full width of the parent container */
+            height: auto;
             object-fit: contain;
-            z-index: -1; /* Pushes the image to the very back layer */
+            display: block;
+        }
+
+        /* Styling for the caption text */
+        #hover-caption-display {
+            text-align: left;
+            margin-top: 5px; /* Small gap between image and caption */
+            padding: 0 5px; /* Small padding inside the caption area */
+            line-height: 1.2;
+            width: 100%;
         }
 
         /*
-        Styling the trigger text. Removed unnecessary z-index/positioning.
+        Styling the trigger text.
         */
         .img-trigger {
             cursor: pointer;
@@ -37,76 +65,110 @@
     </style>
 </head>
 <body>
-    Kenta Osborn
-    <br>
-    Music
-    <br>
-    Flyers
-    <br>
-    <span class="img-trigger" data-url="https://placehold.co/250x180/007bff/ffffff?text=Flyer+1+(Horizontal)">[ 1 ]</span>
-    <br>
-    <span class="img-trigger" data-url="https://placehold.co/250x350/28a745/ffffff?text=Flyer+2+(Vertical)">[ 2 ]</span>
-    <br>
-    <span class="img-trigger" data-url="https://placehold.co/250x180/dc3545/ffffff?text=Flyer+3+(Horizontal)">[ 3 ]</span>
-    <br>
-    <span class="img-trigger" data-url="https://placehold.co/250x350/ffc107/000000?text=Flyer+4+(Vertical)">[ 4 ]</span>
-    <br>
-    <span class="img-trigger" data-url="https://placehold.co/250x180/17a2b8/ffffff?text=Flyer+5+(Horizontal)">[ 5 ]</span>
-    <br>
-    <span class="img-trigger" data-url="https://placehold.co/250x350/6f42c1/ffffff?text=Flyer+6+(Vertical)">[ 6 ]</span>
-    <br>
-    <span class="img-trigger" data-url="https://placehold.co/250x180/e83e8c/ffffff?text=Flyer+7+(Horizontal)">[ 7 ]</span>
-    <br>
-    Events
-    <br>
-    <a href="https://www.instagram.com/p/C4IdDF-LRsL/">https://www.instagram.com/p/C4IdDF-LRsL/</a>
-    <br>
-    <a href="https://www.instagram.com/p/DN3WtaW2vnX/">https://www.instagram.com/p/DN3WtaW2vnX/</a>
-    <br>
-    Photo
-    <br>
-    <span class="img-trigger" data-url="https://placehold.co/250x350/fd7e14/ffffff?text=Photo+1+(Vertical)">[ 1 ]</span>
-    <br>
-    <span class="img-trigger" data-url="https://placehold.co/250x180/20c997/ffffff?text=Photo+2+(Horizontal)">[ 2 ]</span>
-    <br>
-    Video
-    <br>
-    Clothing
-    <br>
-    <span class="img-trigger" data-url="https://placehold.co/250x350/6c757d/ffffff?text=Cloth+1+(Vertical)">[ 1 ]</span>
-    <br>
-    <span class="img-trigger" data-url="https://placehold.co/250x180/343a40/ffffff?text=Cloth+2+(Horizontal)">[ 2 ]</span>
-    <br>
-    Web Design
-    <br>
-    <a href="https://www.keepmagazine.online">https://www.keepmagazine.online</a>
-    <br>
-    Contact
-    <br>
-    <a href="https://instagram.com/kentaosborn">Instagram</a>
-    <br>
-    <a href="mailto:osbornkenta@gmail.com">Email</a>
+    <!-- New container wraps all the content to enforce the max-width -->
+    <div id="content-container">
+        Kenta Osborn is a multidisciplinary creative specializing in graphic design, web design, video production (filming, editing, directing), promotional content, and marketing.
+        <br>
+        <!-- MOVED CLOTHING TO THE TOP -->
+        Clothing
+        <br>
+        <!-- Added data-caption for clothing -->
+        <span class="img-trigger placeholder-trigger" data-placeholder="img8.jpg" data-caption="T-Shirt design for Donny Thrash (formerly Rex Spit)">[1]</span>
+        <br>
+        <!-- Added data-caption for clothing -->
+        <span class="img-trigger placeholder-trigger" data-placeholder="img11.jpg" data-caption="Hoodie design for Homixide Beno's brother">[2]</span>
+        <br>
+        <!-- ADDED MODELLING SECTION -->
+        Modelling
+        <br>
+        <!-- ADDED STYLING BELOW CLOTHING -->
+        Styling
+        <br>
+        Photo
+        <br>
+        <!-- RENAMED attribute to data-src -->
+        <span class="img-trigger photo-trigger" data-src="img14.jpg" data-caption="Photo for Guarded Jeans">[1]</span>
+        <br>
+        <!-- RENAMED attribute to data-src -->
+        <span class="img-trigger photo-trigger" data-src="img15.jpg" data-caption="Photo for Swannclayre Loose Ends button shirt">[2]</span>
+        <br>
+        Video
+        <br>
+        Web Design
+        <br>
+        <a href="https://www.keepmagazine.online">https://www.keepmagazine.online</a>
+        <br>
+        <!-- MOVED EVENTS ABOVE CONTACT -->
+        Events
+        <br>
+        <a href="https://www.instagram.com/p/C4IdDF-LRsL/">https://www.instagram.com/p/C4IdDF-LRsL/</a>
+        <br>
+        <a href="https://www.instagram.com/p/DN3WtaW2vnX/">https://www.instagram.com/p/DN3WtaW2vnX/</a>
+        <br>
+        Contact
+        <br>
+        <a href="https://instagram.com/kentaosborn">Instagram</a>
+        <br>
+        <a href="mailto:osbornkenta@gmail.com">Email</a>
+    </div>
 
-    <!-- The single image element that appears on hover -->
-    <img id="hover-image-display" src="" alt="Hover Preview">
+    <!-- The container holds the image and the caption -->
+    <div id="image-and-caption-container">
+        <img id="hover-image-display" src="" alt="Hover Preview">
+        <div id="hover-caption-display"></div>
+    </div>
 
     <script>
+        // Define the base URL for the hosted photo files
+        const PHOTO_BASE_PATH = "https://kentaosborn.github.com/kentaosborn/images/";
+
+        // Define configurations for placeholder images (Clothing items)
+        const PLACEHOLDER_CONFIG = {
+            'cloth1': { size: '250x350', color: '6c757d', text: 'Cloth 1 (Vertical)' },
+            'cloth2': { size: '250x180', color: '343a40', text: 'Cloth 2 (Horizontal)' }
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
             const triggers = document.querySelectorAll('.img-trigger');
+            const imageCaptionContainer = document.getElementById('image-and-caption-container');
             const hoverImage = document.getElementById('hover-image-display');
+            const hoverCaption = document.getElementById('hover-caption-display');
 
             triggers.forEach(trigger => {
-                const imageUrl = trigger.getAttribute('data-url');
-
+                
                 trigger.addEventListener('mouseover', () => {
-                    // Update the image source and display it instantly
-                    hoverImage.src = imageUrl;
-                    hoverImage.style.display = 'block';
+                    let finalUrl = '';
+                    // Get the caption text
+                    const captionText = trigger.getAttribute('data-caption') || '';
+
+                    // Logic to construct the final image URL
+                    if (trigger.classList.contains('photo-trigger')) {
+                        // CHANGED from 'data-filename' to 'data-src'
+                        const srcName = trigger.getAttribute('data-src');
+                        finalUrl = PHOTO_BASE_PATH + srcName;
+                    } 
+                    else if (trigger.classList.contains('placeholder-trigger')) {
+                        const identifier = trigger.getAttribute('data-placeholder');
+                        const config = PLACEHOLDER_CONFIG[identifier];
+                        
+                        if (config) {
+                            finalUrl = `https://placehold.co/${config.size}/${config.color}/ffffff?text=${encodeURIComponent(config.text)}`;
+                        }
+                    }
+
+                    if (finalUrl) {
+                        // 1. Update the image source
+                        hoverImage.src = finalUrl;
+                        // 2. Prepend the asterisk to the caption text
+                        hoverCaption.textContent = '* ' + captionText; 
+                        // 3. Display the entire container (image + caption)
+                        imageCaptionContainer.style.display = 'block';
+                    }
                 });
 
                 trigger.addEventListener('mouseout', () => {
-                    // Hide the image instantly
-                    hoverImage.style.display = 'none';
+                    // Hide the entire container instantly
+                    imageCaptionContainer.style.display = 'none';
                 });
             });
         });
