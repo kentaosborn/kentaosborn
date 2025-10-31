@@ -4,92 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kenta Osborn</title>
-    <!-- Basic CSS for the image and trigger elements -->
     <style>
         body {
-            /* Changed font to Courier and reduced size */
             font-family: 'Courier New', Courier, monospace; 
             font-size: small;
-            /* Padding removed to allow content to align with the extreme left edge */
             padding: 0; 
-            /* Added negative letter-spacing to make the gap between letters smaller */
             letter-spacing: -0.05em; 
         }
 
-        /* Container to limit text width to approx. half the page. */
         #content-container {
-            max-width: 500px; /* Limits the width of the text column */
-            /* Added back a small left padding so text doesn't touch the very edge */
+            max-width: 500px;
             padding-left: 20px;
             padding-top: 20px;
         }
 
-        /*
-        DESKTOP STYLING (Default for large screens)
-        Container for the image and caption. Fixed to the right edge.
-        */
         #image-and-caption-container {
             position: fixed; 
-            right: 100px; /* Adjusted to 100px from the right edge */
-            top: 50%; /* Position 50% down from the top */
-            transform: translateY(-50%); /* Shift up by half its height to perfectly center it vertically */
-            width: 375px; /* DEFAULT SIZE: 1.5x vertical photos */
+            right: 100px; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            width: 375px; 
             display: none;
-            z-index: -1; /* Pushes the entire container to the very back layer, behind text */
+            z-index: -1; 
         }
         
-        /* Universal class for horizontal images (double width) */
         #image-and-caption-container.horizontal-display {
             width: 500px; 
         }
 
-        /* NEW: MEDIA QUERY FOR MOBILE FIX
-        ------------------------------------------------------
-        Overrides fixed desktop positioning to ensure image is centered and fluid on small screens.
-        */
         @media (max-width: 768px) {
             #image-and-caption-container {
-                right: auto; /* REMOVES the fixed right anchor */
-                left: 50%; /* Centers horizontally */
-                /* Replaces the old transform to center on both X and Y axis */
+                right: auto; 
+                left: 50%; 
                 transform: translate(-50%, -50%); 
-                
-                width: 70vw; /* Fluid width for vertical/default images */
-                max-width: 375px; /* Keeps the size reasonable */
-                z-index: -1; /* Explicitly ensure it stays behind the text */
-
-                /* Ensure no bubble styles are accidentally introduced */
+                width: 70vw;
+                max-width: 375px; 
+                z-index: -1; 
                 background-color: transparent; 
                 box-shadow: none;
                 padding: 0;
             }
 
             #image-and-caption-container.horizontal-display {
-                width: 90vw; /* Wider fluid width for horizontal images */
+                width: 90vw; 
                 max-width: 500px;
             }
         }
 
-        /* Styling for the image */
         #hover-image-display {
-            width: 100%; /* Take up the full width of the parent container */
+            width: 100%; 
             height: auto;
             object-fit: contain;
             display: block;
         }
 
-        /* Styling for the caption text */
         #hover-caption-display {
             text-align: left;
-            margin-top: 5px; /* Small gap between image and caption */
-            padding: 0 5px; /* Small padding inside the caption area */
+            margin-top: 5px; 
+            padding: 0 5px; 
             line-height: 1.2;
             width: 100%;
         }
 
-        /*
-        Styling the trigger text.
-        */
         .img-trigger {
             cursor: pointer;
             color: inherit;
@@ -97,40 +73,63 @@
     </style>
 </head>
 <body>
-    <!-- New container wraps all the content to enforce the max-width -->
     <div id="content-container">
         Kenta Osborn is a multidisciplinary creative specializing in graphic design, web design, video production (filming, editing, directing), promotional content, and marketing.
         <br>
-        <!-- MOVED CLOTHING TO THE TOP -->
         Clothing
         <br>
-        <!-- Vertical image - now uses the new default 375px size -->
-        <span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img8.jpg" data-caption="T-shirt graphic for Donny Thrash (formerly Rex Spit)">[1]</span>
+        &emsp;Rex Spit
         <br>
-        <!-- Horizontal image - still uses 500px due to data-orientation="horizontal" -->
-        <span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img11.jpg" data-caption="Hoodie graphic for Homixide Beno's brother" data-orientation="horizontal">[2]</span>
+        &emsp;&emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img8.jpg" data-caption="T-shirt graphic for Donny Thrash (formerly Rex Spit)">[1]</span>
         <br>
-        <!-- ADDED MODELLING SECTION -->
-        Modelling
+        &emsp;&emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img11.jpg" data-caption="Hoodie graphic for Homixide Beno's brother" data-orientation="horizontal">[2]</span>
         <br>
-        <!-- ADDED STYLING BELOW CLOTHING -->
-        Styling
+        &emsp;&emsp;<span class="img-trigger photo-trigger" data-src="https://via.placeholder.com/375x500" data-caption="Placeholder clothing design">[3]</span>
+        <br>
+        &emsp;&emsp;&emsp;Saint Avere
+        <br>
+        &emsp;&emsp;&emsp;&emsp;<span class="img-trigger photo-trigger" data-src="https://via.placeholder.com/375x500" data-caption="Saint Avere design 1">[1]</span>
+        <br>
+        &emsp;&emsp;&emsp;&emsp;<span class="img-trigger photo-trigger" data-src="https://via.placeholder.com/500x375" data-caption="Saint Avere design 2" data-orientation="horizontal">[2]</span>
         <br>
         Photo
         <br>
-        <!-- Horizontal image - still uses 500px due to data-orientation="horizontal" -->
-        <span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img14.jpg" data-caption="For Guarded Jeans" data-orientation="horizontal">[1]</span>
+        &emsp;Swannclayre
         <br>
-        <!-- Horizontal image - still uses 500px due to data-orientation="horizontal" -->
-        <span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img15.jpg" data-caption="For Swannclayre Loose Ends button shirt" data-orientation="horizontal">[2]</span>
+        &emsp;&emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img14.jpg" data-caption="For Guarded Jeans" data-orientation="horizontal">[1]</span>
+        <br>
+        &emsp;&emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img15.jpg" data-caption="For Swannclayre Loose Ends button shirt" data-orientation="horizontal">[2]</span>
+        <br>
+        &emsp;&emsp;&emsp;Guarded jeans
+        <br>
+        &emsp;&emsp;&emsp;&emsp;<span class="img-trigger photo-trigger" data-src="https://via.placeholder.com/375x500" data-caption="Guarded Jeans lookbook 1">[1]</span>
+        <br>
+        &emsp;&emsp;&emsp;&emsp;<span class="img-trigger photo-trigger" data-src="https://via.placeholder.com/500x375" data-caption="Guarded Jeans lookbook 2" data-orientation="horizontal">[2]</span>
+        <br>
+        &emsp;&emsp;&emsp;Shower sesh
+        <br>
+        &emsp;&emsp;&emsp;&emsp;<span class="img-trigger photo-trigger" data-src="https://via.placeholder.com/375x500" data-caption="Shower Sesh photo 1">[1]</span>
+        <br>
+        &emsp;&emsp;&emsp;&emsp;<span class="img-trigger photo-trigger" data-src="https://via.placeholder.com/375x500" data-caption="Shower Sesh photo 2">[2]</span>
+        <br>
+        &emsp;&emsp;&emsp;&emsp;<span class="img-trigger photo-trigger" data-src="https://via.placeholder.com/500x375" data-caption="Shower Sesh photo 3" data-orientation="horizontal">[3]</span>
+        <br>
+        &emsp;&emsp;&emsp;&emsp;<span class="img-trigger photo-trigger" data-src="https://via.placeholder.com/375x500" data-caption="Shower Sesh photo 4">[4]</span>
+        <br>
+        &emsp;&emsp;&emsp;&emsp;<span class="img-trigger photo-trigger" data-src="https://via.placeholder.com/500x375" data-caption="Shower Sesh photo 5" data-orientation="horizontal">[5]</span>
+        <br>
+        &emsp;&emsp;&emsp;&emsp;<span class="img-trigger photo-trigger" data-src="https://via.placeholder.com/375x500" data-caption="Shower Sesh photo 6">[6]</span>
         <br>
         Video
+        <br>
+        <a href="https://www.instagram.com/p/DPpQxHjDjjJ/" target="_blank">https://www.instagram.com/p/DPpQxHjDjjJ/</a>
         <br>
         Web Design
         <br>
         <a href="https://www.keepmagazine.online" target="_blank">https://www.keepmagazine.online</a>
         <br>
-        <!-- MOVED EVENTS ABOVE CONTACT -->
+        <a href="https://vuota.us/pages/home" target="_blank">https://vuota.us/pages/home</a>
+        <br>
         Events
         <br>
         <a href="https://www.instagram.com/p/C4IdDF-LRsL/" target="_blank">https://www.instagram.com/p/C4IdDF-LRsL/</a>
@@ -144,9 +143,7 @@
         <a href="mailto:osbornkenta@gmail.com">Email</a>
     </div>
 
-    <!-- The container holds the image and the caption -->
     <div id="image-and-caption-container">
-        <!-- Added a very basic alt text for accessibility -->
         <img id="hover-image-display" src="" alt="Item Preview">
         <div id="hover-caption-display"></div>
     </div>
@@ -160,9 +157,7 @@
             
             let hideTimeout; 
             
-            // Function to show the image on both mouseover and touchstart
             const showImage = (e, trigger) => {
-                // Clear the hide timeout immediately
                 clearTimeout(hideTimeout);
 
                 const finalUrl = trigger.getAttribute('data-src');
@@ -170,72 +165,48 @@
                 const isHorizontal = trigger.getAttribute('data-orientation') === 'horizontal'; 
                 
                 if (finalUrl) {
-                    // 1. DYNAMICALLY ADJUST SIZE
                     if (isHorizontal) {
                         imageCaptionContainer.classList.add('horizontal-display');
                     } else {
                         imageCaptionContainer.classList.remove('horizontal-display');
                     }
                     
-                    // 2. Update the image source
                     hoverImage.src = finalUrl;
-                    // 3. Prepend the asterisk to the caption text
                     hoverCaption.textContent = '* ' + captionText; 
-                    // 4. Display the entire container (image + caption)
                     imageCaptionContainer.style.display = 'block';
                 }
             };
 
-            // Function to hide the image on both mouseout and touch-end/click-outside
             const hideImage = () => {
-                 // Start the hide timeout
                 hideTimeout = setTimeout(() => {
-                    // Hide the entire container instantly
                     imageCaptionContainer.style.display = 'none';
-                    // Remove the class to reset the container size for the next hover
                     imageCaptionContainer.classList.remove('horizontal-display'); 
-                    // Clear the source when hiding to prepare for next hover
                     hoverImage.src = '';
-                }, 200); // 200ms delay for desktop jitter
+                }, 200);
             }
             
             triggers.forEach(trigger => {
-                // Desktop/Mouse events (existing logic)
                 trigger.addEventListener('mouseover', (e) => showImage(e, trigger));
                 trigger.addEventListener('mouseout', hideImage);
                 
-                // MOBILE/Touch events (NEW)
                 trigger.addEventListener('touchstart', (e) => {
-                    e.preventDefault(); // CRITICAL: Stop the touch from acting like a click
-                    
-                    // Before showing the new image, we need to hide any currently visible one
+                    e.preventDefault(); 
                     if (imageCaptionContainer.style.display === 'block') {
-                        // If an image is already showing (from a previous tap), hide it first
-                        // before showing the new one, simulating a toggle/dismiss.
                         hideImage();
-                        // Then proceed to show the new one
-                        // We use a slight delay to ensure the hide action completes visually
                         setTimeout(() => showImage(e, trigger), 50); 
                     } else {
-                        // Otherwise, just show the image
                          showImage(e, trigger);
                     }
                 });
             });
 
-            // GLOBAL CLICK LISTENER (NEW): Hides the image when user taps anywhere else on mobile
             document.addEventListener('click', (e) => {
-                // Check if the click/tap target is *not* a trigger and *not* the image container itself
                 if (!e.target.closest('.img-trigger') && !e.target.closest('#image-and-caption-container')) {
-                     // Only hide if we are currently showing an image
                      if (imageCaptionContainer.style.display === 'block') {
                          hideImage();
                      }
                 }
             });
-            
-            // Since touchstart has preventDefault, we need a way to dismiss the image, 
-            // the global click listener handles this by tapping outside the image.
         });
     </script>
 </body>
