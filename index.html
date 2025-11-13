@@ -10,12 +10,16 @@
             font-size: small;
             padding: 0; 
             letter-spacing: -0.05em; 
+            margin: 0; /* Added margin: 0 for better full-page control */
+            line-height: 1.4; /* Adjusted line-height for readability */
         }
 
         #content-container {
             max-width: 500px;
             padding-left: 20px;
             padding-top: 20px;
+            /* Added min-height to ensure container handles small content on large screens */
+            min-height: 100vh; 
         }
 
         #image-and-caption-container {
@@ -25,7 +29,8 @@
             transform: translateY(-50%); 
             width: 375px; 
             display: none;
-            z-index: -1; 
+            z-index: 10; /* Increased z-index to ensure it sits above content */
+            pointer-events: none; /* Allows clicks to pass through when not interacting */
         }
         
         #image-and-caption-container.horizontal-display {
@@ -36,10 +41,11 @@
             #image-and-caption-container {
                 right: auto; 
                 left: 50%; 
+                top: 50%; /* Ensuring it stays centered */
                 transform: translate(-50%, -50%); 
                 width: 70vw;
                 max-width: 375px; 
-                z-index: -1; 
+                z-index: 10; 
                 background-color: transparent; 
                 box-shadow: none;
                 padding: 0;
@@ -56,19 +62,30 @@
             height: auto;
             object-fit: contain;
             display: block;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Added slight shadow for visibility */
         }
 
         #hover-caption-display {
             text-align: left;
             margin-top: 5px; 
-            padding: 0 5px; 
+            padding: 5px 0; /* Adjusted padding */
             line-height: 1.2;
             width: 100%;
+            font-size: smaller; /* Ensuring the caption is small */
         }
 
         .img-trigger {
             cursor: pointer;
             color: inherit;
+            /* Underline only on hover to maintain the text aesthetic */
+            text-decoration: none; 
+            display: inline-block; /* Allows padding/margin for better touch target */
+            padding: 0 2px;
+            transition: color 0.1s;
+        }
+
+        .img-trigger:hover {
+            color: #555; /* Slight color change on hover */
         }
     </style>
 </head>
@@ -76,11 +93,28 @@
     <div id="content-container">
         Kenta Osborn is a multidisciplinary creative specializing in graphic design, web design, video production (filming, editing, directing), photography, and styling.
         <br>
-        Clothing
+        <br>
+        Graphic Design
+        <br>
+        &emsp;Surf Gang
+        <br>
+        &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img16.jpg" data-caption="Surf Gang concert flyer">[1]</span>
+        <br>
+        &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img17.jpg" data-caption="Surf Gang concert flyer" data-orientation="horizontal">[2]</span>
+        <br>
+        &emsp;Antagonist 2.0
+        <br>
+        &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/antagonistflyer2.jpg" data-caption="Antagonist 2.0 Poster">[1]</span>
+        <br>
+        &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img20.jpg" data-caption="Antagonist 2.0 Album Art">[2]</span>
+        <br>
+        &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img18.jpg" data-caption="Antagonist 2.0 Merch Mockup" data-orientation="horizontal">[3]</span>
+        <br>
+        &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img19.jpg" data-caption="Antagonist 2.0 Social Graphic">[4]</span>
         <br>
         &emsp;Rex Spit
         <br>
-        &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img8.jpg" data-caption="T-shirt graphic for Donny Thrash (formerly Rex Spit)">[1]</span>
+        &emsp;<span class="img-trigger photo-trigger" data-src="sborn/images/img8.jpg" data-caption="T-shirt graphic for Donny Thrash (formerly Rex Spit)">[1]</span>
         <br>
         &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/port7.jpg" data-caption="Worn by Nascar Aloe" data-orientation="horizontal">[2]</span>
         <br>
@@ -93,6 +127,7 @@
         &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/port10.jpg" data-caption="Hoodie graphic for Homixide Beno's brother" data-orientation="horizontal">[2]</span>
         <br>
          &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/port11.jpg" data-caption="Hoodie graphic for Homixide Beno's brother" data-orientation="horizontal">[3]</span>
+        <br>
         <br>
         Photo
         <br>
@@ -119,12 +154,14 @@
         &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/port4.jpg" data-caption="Random shower photoshoot, text and block weight study">[4]</span>
         <br>
         &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/port5.jpg" data-caption="Random shower photoshoot, text and block weight study" data-orientation="horizontal">[5]</span>
-        <br>
+        <br>https://kentaosborn.github.io/kentao
         &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/port6.jpg" data-caption="Random shower photoshoot, text and block weight study">[6]</span>
+        <br>
         <br>
         Video
         <br>
         &emsp;<a href="https://www.instagram.com/p/DPpQxHjDjjJ/" target="_blank">https://www.instagram.com/p/DPpQxHjDjjJ/</a>
+        <br>
         <br>
         Web Design
         <br>
@@ -132,21 +169,28 @@
         <br>
         &emsp;<a href="https://vuota.us/pages/home" target="_blank">https://vuota.us/pages/home</a>
         <br>
+        <br>
         Events
         <br>
         &emsp;<a href="https://www.instagram.com/p/C4IdDF-LRsL/" target="_blank">https://www.instagram.com/p/C4IdDF-LRsL/</a>
         <br>
         &emsp;<a href="https://www.instagram.com/p/DN3WtaW2pnX/" target="_blank">https://www.instagram.com/p/DN3WtaW2pnX/</a>
         <br>
+        <br>
         Contact
         <br>
         &emsp;<a href="https://instagram.com/kentaosborn" target="_blank">Instagram</a>
         <br>
         &emsp;<a href="mailto:osbornkenta@gmail.com">Email</a>
+        <br>
+        <br>
+        <!-- Added extra line breaks for better visual spacing at the bottom -->
+        <br><br><br><br> 
     </div>
 
     <div id="image-and-caption-container">
-        <img id="hover-image-display" src="" alt="Item Preview">
+        <!-- Added onerror to handle broken image URLs gracefully -->
+        <img id="hover-image-display" src="" alt="Item Preview" onerror="this.src='https://placehold.co/375x500/cccccc/000000?text=Image+Load+Error';">
         <div id="hover-caption-display"></div>
     </div>
 
@@ -176,6 +220,7 @@
                     hoverImage.src = finalUrl;
                     hoverCaption.textContent = '* ' + captionText; 
                     imageCaptionContainer.style.display = 'block';
+                    imageCaptionContainer.style.pointerEvents = 'auto'; // Re-enable pointer events when visible
                 }
             };
 
@@ -184,31 +229,45 @@
                     imageCaptionContainer.style.display = 'none';
                     imageCaptionContainer.classList.remove('horizontal-display'); 
                     hoverImage.src = '';
+                    imageCaptionContainer.style.pointerEvents = 'none'; // Disable pointer events when hidden
                 }, 200);
             }
             
             triggers.forEach(trigger => {
+                // Mouse/Hover events
                 trigger.addEventListener('mouseover', (e) => showImage(e, trigger));
                 trigger.addEventListener('mouseout', hideImage);
                 
+                // Touch events for mobile/touch devices
                 trigger.addEventListener('touchstart', (e) => {
                     e.preventDefault(); 
-                    if (imageCaptionContainer.style.display === 'block') {
-                        hideImage();
-                        setTimeout(() => showImage(e, trigger), 50); 
+                    // Toggling behavior for touch devices
+                    if (imageCaptionContainer.style.display === 'block' && 
+                        hoverImage.src.includes(trigger.getAttribute('data-src'))) {
+                        hideImage(); // Hide if already showing the same image
                     } else {
+                         // Otherwise, show the new image
+                         clearTimeout(hideTimeout); 
                          showImage(e, trigger);
                     }
                 });
             });
 
+            // Global click handler to dismiss on mobile/touch when clicking elsewhere
             document.addEventListener('click', (e) => {
+                // If the click is not on a trigger and not inside the image container, hide it
                 if (!e.target.closest('.img-trigger') && !e.target.closest('#image-and-caption-container')) {
                      if (imageCaptionContainer.style.display === 'block') {
                          hideImage();
                      }
                 }
             });
+
+            // Prevent the fixed container from disappearing when the mouse moves over it
+            imageCaptionContainer.addEventListener('mouseover', () => {
+                clearTimeout(hideTimeout);
+            });
+            imageCaptionContainer.addEventListener('mouseout', hideImage);
         });
     </script>
 </body>
