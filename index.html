@@ -87,6 +87,47 @@
         .img-trigger:hover {
             color: #555; /* Slight color change on hover */
         }
+
+        /* Music Section Styles */
+        .music-trigger {
+            cursor: pointer;
+            text-decoration: none;
+            transition: color 0.1s;
+        }
+
+        .music-trigger:hover {
+            color: #555;
+        }
+
+        .music-trigger.playing {
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        #audio-player-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: white;
+            padding: 10px;
+            border: 1px solid #000;
+            z-index: 100;
+            display: none;
+            max-width: 300px;
+        }
+
+        #audio-player-container audio {
+            height: 30px;
+            outline: none;
+        }
+
+        #current-track-display {
+            font-size: x-small;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     </style>
 </head>
 <body>
@@ -131,11 +172,21 @@
         <br>
         Photo
         <br>
-        &emsp;Swannclayre
+        &emsp;Ivan
         <br>
-        &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/port12.jpg" data-caption="For Swannclayre Loose Ends button shirt" data-orientation="horizontal">[1]</span>
+        &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/kenta1.jpg" data-caption="Ivan of 9Times" data-orientation="horizontal">[1]</span>
         <br>
-        &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/img15.jpg" data-caption="For Swannclayre Loose Ends button shirt" data-orientation="horizontal">[2]</span>
+        &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/kenta2.jpg" data-caption="Ivan of 9Times" data-orientation="horizontal">[2]</span>
+        <br>
+        &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/kenta3.jpg" data-caption="Ivan of 9Times" data-orientation="horizontal">[3]</span>
+        <br>
+        &emsp;Ivan
+        <br>
+        &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/kenta4.jpg" data-caption="Sonny & Ivan of 9Times" data-orientation="horizontal">[1]</span>
+        <br>
+        &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/kenta5.jpg" data-caption="Sonny & Ivan of 9Times" data-orientation="horizontal">[2]</span>
+        <br>
+        &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/kenta6.jpg" data-caption="Sonny & Ivan of 9Times" data-orientation="horizontal">[3]</span>
         <br>
         &emsp;Guarded jeans
         <br>
@@ -157,15 +208,41 @@
         <br>
         &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/port6.jpg" data-caption="Random shower photoshoot, text and block weight study">[6]</span>
         <br>
+         &emsp;Galaxy Sound Co.
+        <br>
+        &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/galaxy1.jpg" data-caption="Clothing rack + shower liner">[1]</span>
+        <br>
+        &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/galaxy2.jpg" data-caption="*">[2]</span>
+        <br>
+        &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/galaxy3.jpg" data-caption="*" data-orientation="horizontal">[3]</span>
+        <br>
+        &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/galaxy4.jpg" data-caption="*" data-orientation="horizontal">[4]</span>
+        <br>
+        &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/galaxy5.jpg" data-caption="*" data-orientation="horizontal">[5]</span>
+        <br>
+        &emsp;<span class="img-trigger photo-trigger" data-src="https://kentaosborn.github.io/kentaosborn/images/galaxy6.jpg" data-caption="*" data-orientation="horizontal">[6]</span>
+        <br>
         <br>
         Video
         <br>
-        &emsp;<a href="https://www.instagram.com/p/DPpQxHjDjjJ/" target="_blank">https://www.instagram.com/p/DPpQxHjDjjJ/</a>
+        &emsp;<a href="https://www.youtube.com/watch?v=Wgm8Ti_NZ2U" target="_blank">https://www.youtube.com/watch?v=Wgm8Ti_NZ2U</a>
+        <br>
+        &emsp;<a href="https://www.youtube.com/watch?v=13Ds_qNRUrE" target="_blank">https://www.youtube.com/watch?v=13Ds_qNRUrE</a>
+        <br>
+        &emsp;<a href="https://www.youtube.com/watch?v=xoLKFZkFvfU" target="_blank">https://www.youtube.com/watch?v=xoLKFZkFvfU</a>
         <br>
         <br>
         Web Design
         <br>
-        &emsp;<a href="https://www.keepmagazine.online" target="_blank">https://www.keepmagazine.online</a>
+        &emsp;<a href="https://www.kentaosborn.com" target="_blank">https://www.kentaosborn.com</a>
+        <br>
+        &emsp;<a href="https://www.rainierdazeseattle.com" target="_blank">https://www.rainierdazeseattle.com</a>
+        <br>
+        &emsp;<a href="https://www.crystaltearssclo.com" target="_blank">https://www.crystaltearssclo.com</a>
+        <br>
+        &emsp;<a href="https://www.merterstudios.com" target="_blank">https://www.merterstudios.com</a>
+        <br>
+        &emsp;<a href="https://www.droplabstudio.com" target="_blank">https://www.droplabstudio.com</a>
         <br>
         &emsp;<a href="https://vuota.us/pages/home" target="_blank">https://vuota.us/pages/home</a>
         <br>
@@ -175,6 +252,13 @@
         &emsp;<a href="https://www.instagram.com/p/C4IdDF-LRsL/" target="_blank">https://www.instagram.com/p/C4IdDF-LRsL/</a>
         <br>
         &emsp;<a href="https://www.instagram.com/p/DN3WtaW2pnX/" target="_blank">https://www.instagram.com/p/DN3WtaW2pnX/</a>
+        <br>
+        <br>
+        Music
+        <br>
+        &emsp;<span class="music-trigger" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" data-title="Example Track 1">[1]</span>
+        <br>
+        &emsp;<span class="music-trigger" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" data-title="Example Track 2">[2]</span>
         <br>
         <br>
         Contact
@@ -192,6 +276,13 @@
         <!-- Added onerror to handle broken image URLs gracefully -->
         <img id="hover-image-display" src="" alt="Item Preview" onerror="this.src='https://placehold.co/375x500/cccccc/000000?text=Image+Load+Error';">
         <div id="hover-caption-display"></div>
+    </div>
+
+    <div id="audio-player-container">
+        <div id="current-track-display"></div>
+        <audio id="main-audio-player" controls>
+            Your browser does not support the audio element.
+        </audio>
     </div>
 
     <script>
@@ -268,6 +359,52 @@
                 clearTimeout(hideTimeout);
             });
             imageCaptionContainer.addEventListener('mouseout', hideImage);
+
+            // Music Player Logic
+            const musicTriggers = document.querySelectorAll('.music-trigger');
+            const audioPlayerContainer = document.getElementById('audio-player-container');
+            const mainAudioPlayer = document.getElementById('main-audio-player');
+            const currentTrackDisplay = document.getElementById('current-track-display');
+
+            musicTriggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const src = trigger.getAttribute('data-src');
+                    const title = trigger.getAttribute('data-title');
+
+                    // If clicking the same track, toggle play/pause
+                    if (mainAudioPlayer.src === src) {
+                        if (mainAudioPlayer.paused) {
+                            mainAudioPlayer.play();
+                        } else {
+                            mainAudioPlayer.pause();
+                        }
+                    } else {
+                        // Switch track
+                        mainAudioPlayer.src = src;
+                        currentTrackDisplay.textContent = '* ' + title;
+                        audioPlayerContainer.style.display = 'block';
+                        mainAudioPlayer.play();
+
+                        // Update active trigger styling
+                        musicTriggers.forEach(t => t.classList.remove('playing'));
+                        trigger.classList.add('playing');
+                    }
+                });
+            });
+
+            // Update UI when audio is paused or played externally (e.g. controls)
+            mainAudioPlayer.addEventListener('play', () => {
+                const currentSrc = mainAudioPlayer.src;
+                musicTriggers.forEach(t => {
+                    if (t.getAttribute('data-src') === currentSrc) {
+                        t.classList.add('playing');
+                    }
+                });
+            });
+
+            mainAudioPlayer.addEventListener('pause', () => {
+                musicTriggers.forEach(t => t.classList.remove('playing'));
+            });
         });
     </script>
 </body>
